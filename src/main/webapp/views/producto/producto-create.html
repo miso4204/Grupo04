@@ -1,0 +1,53 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Administración de Productos</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Producto 
+            </div>
+             <div class="panel-body" >
+                 <!--<div class="form-group">
+                    <label>Id:</label>
+                    <input class="form-control"  type="text" id="inputId" ng-model="disenoc.disId" placeholder="Id"/>
+                </div>-->
+                 <div class="form-group">
+                    <label>Nombre:</label>
+                    <input class="form-control"  type="text" id="inputNombre" ng-model="productoc.proNombre" placeholder="Nombre"/>
+                </div>
+                <div class="form-group">
+                    <label>Cantidad:</label>
+                    <input class="form-control"  type="text" id="inputCantidad" ng-model="productoc.proCantidad" placeholder="Cantidad"/>
+                </div>
+                <div class="form-group">
+                    <label>Valor:</label>
+                    <input class="form-control"  type="text" id="inputValor" ng-model="productoc.proValor" placeholder="Valor"/>
+                </div>
+                <div class="form-group">
+                    <label for="selectCategoria">Categoria:</label>
+                    <select class="form-control" ng-model="cat" ng-options="cat as cat.catNombre for cat in categorias" id="selectCategoria">
+                    </select>
+                </div>
+                 <div class="form-group" style="width: 50%">
+                    <label for="selectEstilo">Estilo:</label>
+                    <select class="form-control" ng-model="est" ng-options="est as est.estNombre for est in estilos" id="selectEstilo">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Archivo</label>
+                    <input type="file" onchange="angular.element(this).scope().fileChanged(this)">
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-success " ng-click="createAction()">Guardar</button>
+            </div>
+        </div>
+    </div>        
+    <!-- /.col-lg-12 -->
+</div>
+        

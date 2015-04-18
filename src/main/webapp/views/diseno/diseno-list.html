@@ -1,0 +1,122 @@
+<div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Administre sus Diseños</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+<!-- /.row -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            Diseño
+                            
+                        </div>
+                         <div class="panel-body container_full_image" >
+                             <img height="280px" ng-src="{{IMAGE_LOCATION+diseno.disUrl}}" />
+                             
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-danger " ng-click="delete(diseno.disId)">Eliminar</button>
+                            <button class="btn btn-default" ng-click="createForm()">Nuevo</button>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-md-8 -->
+                <div class="col-lg-4">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            
+                            Características
+                            
+                        </div>
+                        <div class="panel-body container_full_image" >
+                            <div class="form-group">
+                                <label for="nombre" >Nombre:</label>
+                                <input class="form-control" id="nombre" type="text" placeholder="Nombre" 
+                                       ng-disabled="disabled" ng-value="{{diseno.disNombre}}" ng-model="diseno.disNombre">
+                            </div>
+                            <label  >Valor:</label>
+                            <div class="form-group input-group">
+                               
+                                <span class="input-group-addon"><i class="fa fa-usd"></i></span>
+                                 
+                                <input type="text" id="valor" class="form-control" ng-value="{{diseno.disValor}}" 
+                                       placeholder="Valor" ng-disabled="disabled" ng-model="diseno.disValor">
+                                <span class="input-group-addon">.00</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Categoria:</label>
+                                <input class="form-control" id="selectCategoria" type="text" placeholder="Categoria" 
+                                       ng-disabled="disabled" ng-model="diseno.catId.catNombre" ng-if="disabled">
+                                <select class="form-control" ng-model="diseno.catId" ng-if="!disabled"
+                                        ng-options="cat as cat.catNombre for cat in categorias" 
+                                        id="selectCategoria" >
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Estilo:</label>
+                                <input class="form-control" id="selectEstilo" type="text" placeholder="Estilo" 
+                                       ng-disabled="disabled" ng-model="diseno.estId.estNombre" ng-if="disabled">
+                               
+                                <select class="form-control" ng-model="diseno.estId" ng-if="!disabled"
+                                        ng-options="est as est.estNombre for est in estilos" 
+                                        id="selectEstilo" >
+                                </select>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <button class="btn btn-default" ng-click="edit()" ng-if="disabled">Editar</button>
+                            <button class="btn btn-warning" ng-click="edit()" ng-if="!disabled">Cancelar</button>
+                            <button class="btn btn-success" ng-click="updateAction()" ng-if="!disabled">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-4 -->
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-body">
+                            <div class="thumbswrapper">
+                                
+                                <div class="thumbwrapper" ng-repeat="image in disenos | orderBy:'disId'"> 
+                                <a href="" ng-click="showSelected(image)" >
+                                <img height="60px"  ng-src="{{IMAGE_LOCATION+image.disUrl}}"/>
+                                    </a>
+                                </div>
+                                
+                            </div>
+                            <!--    Iterate through all images and display them end to end as thumbs -->
+                                   
+                                    
+                                       
+                                
+                          
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+<!--<div class="row">
+    <table class="table table-striped table-condensed">
+        <thead>
+        <tr>
+            <th style="min-width: 80px;">First name</th>
+            <th style="min-width: 80px;">First name</th>
+            <th style="width:20px;"> </th>
+            <th style="width:20px;"> </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in users">
+            <td>{{ user.usuUsuario }}</td>
+             <td>{{ user.perId.perDireccion}}</td>
+                <td><a ng-click="editUser(user.usuId)" class="btn btn-small btn-primary">edit</a></td>
+            <td><a ng-click="deleteUser(user.usuId)" class="btn btn-small btn-danger">delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a ng-click="createNewUser()" class="btn btn-small">create new user</a>
+</div>-->

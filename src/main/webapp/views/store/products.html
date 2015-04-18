@@ -1,0 +1,43 @@
+<div ng-controller="storeController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Product Catalog</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    <p>
+        Search: <input ng-model="search">
+    </p>
+
+    <table class="table table-bordered">
+        <tr class="well">
+            <td class="tdRight" colspan="4" >
+                <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                    <i class="fa fa-shopping-cart" />
+                    <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                </a>
+            </td>
+        </tr>
+        <tbody>
+            <tr ng-repeat="product in products| orderBy:'proNombre' | filter:search">
+                <td class="tdCenter">
+                    <img ng-src="img/products/{{product.proUrl}}.jpg" alt="{{ product.proNombre}}" />
+                </td>
+                <td class="tdCenter">
+                    <a href="#/dashboard/designs/{{product.proId}}"><b>{{ product.proNombre}}</b></a><br />
+                </td>
+                <td class="tdCenter">
+                    {{ product.proValor| currency}}
+                </td>
+            </tr>
+            <tr class="well">
+                <td class="tdRight" colspan="4">
+                    <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                        <i class="fa fa-shopping-cart" />
+                        <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div> 

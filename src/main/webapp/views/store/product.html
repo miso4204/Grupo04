@@ -1,0 +1,95 @@
+<div ng-controller="storeController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Design</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>﻿
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span8">
+
+                <!-- product info -->
+                <table class="table table-bordered">
+
+                    <tr class="well">
+                        <td class="tdRight" colspan="3" >
+                            <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                                <i class="icon-shopping-cart" />
+                                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                                <span ng-show="cart.getTotalCount(product.sku) > 0"><br />this item is in the cart</span>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="tdRight"><b>Size</b></td>
+                        <td><select class="form-control">
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                            </select> </td>
+                    </tr>
+                    <tr>
+                        <td class="tdRight"><b>Text</b></td>
+                        <td><input class="form-control" placeholder="Enter text"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdRight"><b>Color</b></td>
+                        <td> <input name="color" type="color" /></td>
+                    </tr>
+                    <tr ng-repeat="(nutrientName, nutrientValue) in product.nutrients">
+                        <td class="tdRight"><b>{{nutrientName}}</b></td>
+                        <td class="tdCenter"><img ng-src="img/r{{nutrientValue}}.png" alt="{{nutrientValue}}" /></td>
+                        <td>
+                            <b>{{store.dvaCaption[nutrientValue]}}</b>:
+                            {{store.dvaRange[nutrientValue]}}
+                            of the recommended daily value.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="text-center">
+                                <img ng-src="http://2.bp.blogspot.com/-HnHmANX4rcE/UPv2jKZkfxI/AAAAAAAAIhA/06ra8pDSNjQ/s1600/dibujo-camiseta-roja-algod%C3%B3n.png" alt="{{product.name}}"/>
+                            </p> 
+                        </td>
+                    </tr>
+                    <tr class="well">
+                        <td class="tdRight" colspan="3" >
+                            <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                                <i class="icon-shopping-cart" />
+                                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                                <span ng-show="cart.getTotalCount(product.sku) > 0"><br />this item is in the cart</span>
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <!-- buttons -->
+            <div class="span4">
+                <button 
+                    class="btn btn-block btn-success" 
+                    ng-click="cart.addItem(product.sku, product.name, product.price, 1)">
+                    <i class="icon-shopping-cart icon-white" /> add to cart
+                </button>
+                <button 
+                    class="btn btn-block btn-danger" 
+                    ng-click="cart.addItem(product.sku, product.name, product.price, -10000)"
+                    ng-disabled="cart.getTotalCount(product.sku) < 1">
+                    <i class="icon-trash icon-white" /> remove from cart
+                </button>
+                <button 
+                    class="btn btn-block" 
+                    onclick="window.location.href = 'index.html#/dashboard/store'">
+                    <i class="icon-chevron-left" /> back to store
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

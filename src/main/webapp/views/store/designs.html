@@ -1,0 +1,118 @@
+<div ng-controller="storeController">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Design</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>﻿
+
+
+    <div class="container-fluid">
+        <div class="row-fluid">
+
+            <!-- buttons -->
+            <div class="span4">
+                <button 
+                    class="btn btn-block btn-success" 
+                    ng-click="cart.addItem(product.proId, product.proNombre, product.proValor, 1)">
+                    <i class="icon-shopping-cart icon-white" /> add to cart
+                </button>
+                <button 
+                    class="btn btn-block btn-danger"  
+                    ng-click="cart.addItem(product.proId, product.proNombre, product.proValor, -1)"
+                    ng-disabled="cart.getTotalCount(product.proId) < 1">
+                    <i class="icon-trash icon-white" /> remove from cart
+                </button>
+                <button 
+                    class="btn btn-block" 
+                    onclick="window.location.href = 'index.html#/dashboard/products'">
+                    <i class="icon-chevron-left" /> back to store
+                </button>
+
+            </div>
+
+            <div class="span8">
+
+                <!-- product info -->
+                <table class="table table-bordered">
+                    <tr class="well">
+                        <td class="tdRight" colspan="3" >
+                            <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                                <i class="fa fa-shopping-cart" />
+                                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                                <span ng-show="cart.getTotalCount(product.proId) > 0"><br />this item is in the cart</span>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="tdRight"><b>Size</b></td>
+                        <td><select class="form-control">
+                                <option>S</option>
+                                <option>M</option>
+                                <option>L</option>
+                            </select> </td>
+                    </tr>
+                    <tr>
+                        <td class="tdRight"><b>Text</b></td>
+                        <td><input class="form-control" placeholder="Enter text"></td>
+                    </tr>
+                    <tr>
+                        <td class="tdRight"><b>Color</b></td>
+                        <td> <input name="color" type="color" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <p class="text-center">
+                                <img ng-src="img/products/{{product.proUrl}}.jpg" alt="{{product.proNombre}}"/>
+                            </p> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+
+                        </td>
+                    </tr>
+                    <tr class="well">
+                        <td class="tdRight" colspan="3" >
+                            <a href="#/dashboard/cart" title="go to shopping cart" ng-disabled="cart.getTotalCount() < 1">
+                                <i class="fa fa-shopping-cart" />
+                                <b>{{cart.getTotalCount()}}</b> items, <b>{{cart.getTotalPrice() | currency}}</b>
+                                <span ng-show="cart.getTotalCount(product.proId) > 0"><br />this item is in the cart</span>
+                            </a>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="span4">
+                <p>
+                    Search: <input ng-model="search">
+                </p>
+                <div droppable class="box">
+                    <h2>Designs</h2>
+
+                    <div ng-repeat="design in desings| orderBy:'disNombre' | filter:search" draggable id="{{design.disId}}" class="item green">
+                        <p class="text-center">
+                            {{design.disValor| currency}}
+                            <img ng-src="data/{{design.disUrl}}.jpg" width='50' height='50' alt="{{design.disNombre}}"/>
+                        </p> 
+                    </div>
+                </div>
+
+                <div droppable class="box">
+                    <h2>Designs Use</h2>
+                    <div ng-repeat="item in dropped" class="item" id="{{item}}">
+                    </div>
+                </div>
+
+            </div>
+
+       
+
+        </div>
+    </div>
+
+</div>
+

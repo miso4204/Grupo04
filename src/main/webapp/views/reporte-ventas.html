@@ -1,0 +1,82 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Reporte de ventas</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+
+<div class="form-group">
+    <label>Filtrar por Usuarios</label>
+    <select ng-options="usu as usu.nombre for usu in selectusuarios.usuarios" ng-model="usu" class="form-control" >
+    </select>
+</div>
+<div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h3>Ventas (Miles de Pesos) / Mes</h3>
+                             <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th >
+                                                Usuario
+                                         
+                                            </th>
+                                            <th>
+                                                Enero
+                                                
+                                            </th>
+                                            <th>
+                                                Febrero
+                                                
+                                            </th>
+                                            <th>
+                                                Marzo
+                                                
+                                            </th>
+                                            <th>
+                                                Abril
+                                                
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="usuario in selectusuarios.usuarios |filter:usu.nombre">
+                                            <th>{{usuario.nombre}}</th>
+                                            <td>{{usuario.ventas[1]}}</td>
+                                            <td>{{usuario.ventas[2]}}</td>
+                                            <td>{{usuario.ventas[3]}}</td>
+                                            <td>{{usuario.ventas[4]}}</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+<div class="row">
+    <div class="col-lg-6 col-sm-12" id="line-chart" ng-controller="ReporteVentasCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ventas (Miles de Pesos) / Mes</div>
+            <div class="panel-body">
+                <canvas id="line" class="chart chart-line chart-xl" data="line.data" labels="line.labels" legend="true"
+                click="line.toggle()" series="line.series"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-sm-12" id="bar-chart" ng-controller="ReporteVentasCtrl">
+        <div class="panel panel-default">
+            <div class="panel-heading">Ventas (Miles de Pesos) / Mes</div>
+            <div class="panel-body">
+                <canvas id="bar" class="chart chart-bar" data="bar.data" labels="bar.labels" series="bar.series"
+                options="bar.options" legend="true"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
