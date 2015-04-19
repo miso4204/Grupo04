@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h2 class="page-header">Orden de Compra</h2>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="panel-body">
+   
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Documento Numero</th>
+                              
+                                <th>Pais</th>
+                                <th>Ciudad</th>
+                                <th>Direccion</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="it in listaCompra">
+                                <td>{{it.comId}}</td>
+                                <td>{{it.usuId.perId.perPrimerNombre}}</td>
+                                <td>{{it.usuId.perId.perPrimerApelido}}</td>
+                                <td>{{it.usuId.perId.perNumeroDocumento}}</td>
+                                
+                                
+                                <td>{{it.comPais}}</td>
+                                <td>{{it.comCiudad}}</td>
+                                <td>{{it.comDireccion}}</td>
+                                <td>{{it.comValor}}</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>
+                </div>
+</div>
+<div class="panel-body">
+                     <div class="row">
+                    <div class="col-lg-6">
+                    <div>
+                        <label>Pago desde su cuenta corriente o de ahorros</label><p></p><p></p>
+                        <img style="cursor: pointer" onclick="getElementById('pse').style.visibility='visible';getElementById('ps').style.visibility='visible';" src="img/PSE.png"  alt="" height="120" width="150"/>
+                       mas informacion <a ui-sref="dashboard.info" ><i> aqui</i></a>
+                    </div>
+                    </div>
+                     </div>
+                     
+                
+                    <div class="col-lg-6">
+                    <div id="pse" style="visibility: hidden;">
+                        
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            
+                                <th>#</th>
+                                
+                              
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <tr ng-repeat="it in listaCompra">
+                                <td>{{it.comId}}</td>
+                               
+                                
+                               
+                                <td>{{it.comValor}}</td>
+                            </tr>
+                           
+                        </tbody>
+                    </table>   <p></p><p></p> 
+                     <form role="form">
+                            <label>Seleccione Entidad Financiera </label>
+                        <select class="form-control">
+                            <option ng-repeat="banco in pseBanco" disabled>{{banco.nombre}}</option>
+                            <option >Davivienda</option>
+                        </select>
+                       
+                           
+                    </form>   <p></p><p></p> 
+                    <Button type="submit" ui-sref="dashboard.Bankpage" class="btn btn-primary btn-lg btn-block" >Pagar</button>
+                </div>
+                     </div>
+                </div>
+                     
+             
+
+                   
+                         
+                         
+                         
+                         
+            

@@ -323,7 +323,81 @@ angular
                                     })
                                 }
                             }
+                        }) // states para pagos pse @author alejandroquintero
+                        .state('dashboard.compra', {
+                            templateUrl: 'views/pagos/compra.html',
+                            controller: 'pseController',
+                            url: '/compra',
+                             resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Pagos/pseCtrls.js',
+                                            'scripts/pseFactories.js'
+                                        ]
+                                    })
+                                }
+                            }
                         })
+                         .state('dashboard.Bankpage', {
+                            templateUrl: 'views/pagos/Bankpage.html',
+                            url: '/Bankpage',
+                            controller:'pseController',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Pagos/pseCtrls.js',
+                                            'scripts/pseFactories.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                          .state('dashboard.info', {
+                            templateUrl: 'views/pagos/info.html',
+                            url: '/info'
+                            
+                        })
+                          .state('dashboard.cuenta', {
+                            templateUrl: 'views/pagos/cuenta.html',
+                            url: '/cuenta',
+                           controller:'pseController',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Pagos/pseCtrls.js',
+                                            'scripts/pseFactories.js'
+                                        ]
+                                    })
+                                }
+                            } 
+                        })
+                        .state('dashboard.confirmacion', {
+                            templateUrl: 'views/pagos/confirmacion.html',
+                            url: '/confirmacion',
+                            controller: 'pseController',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Pagos/pseCtrls.js',
+                                            'scripts/pseFactories.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                        .state('dashboard.summary', {
+                            templateUrl: 'views/pagos/summary.html',
+                            url: '/summary'
+                            
+                        })// fin de states para pagos pse @author alejandroquintero
                         .state('dashboard.panels-wells', {
                             templateUrl: 'views/ui-elements/panels-wells.html',
                             url: '/panels-wells'
