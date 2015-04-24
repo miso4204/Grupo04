@@ -1,0 +1,55 @@
+ <h1 class="page-header">Usuarios por Perfil</h1>
+    
+    <!-- /.col-lg-12 -->
+
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Listado general de personas
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Perfil</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Email</th>
+                                 <th>Contrasena</th>
+                                 <th>Usuario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr  class="odd gradeX"  ng-repeat="usuario in usuariosLista">
+                                <td>{{usuario.usuperId}}</td>
+                                <td>{{usuario.perId.perNombre}}</td>
+                                <td>{{usuario.usuId.perId.perPrimerNombre}}</td>
+                                <td>{{usuario.usuId.perId.perPrimerApelido}}</td>
+                                <td>{{usuario.usuId.perId.perEmail}}</td>
+                                <td>{{usuario.usuId.usuContrasena}}</td>
+                                <td>{{usuario.usuId.usuUsuario}}</td>
+                                <td ><button type="button"  class="btn-small btn btn-danger" ng-click="borrar(usuario)" >borrar</button></td>
+                                <td ><button type="button" class="btn-small btn btn-primary" ng-click="goEditar(usuario)">Editar</button></td>
+                            </tr>
+                             
+                        </tbody>
+                        
+                    </table>
+                </div>
+               
+           
+           
+                
+            </div>
+            <div><button class="btn btn-default btn-lg btn-block" ui-sref="dashboard.adminCrear">crear usuario</button></div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>

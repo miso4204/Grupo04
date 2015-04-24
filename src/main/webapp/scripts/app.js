@@ -323,7 +323,9 @@ angular
                                     })
                                 }
                             }
-                        }) // states para pagos pse @author alejandroquintero
+                        }) 
+//---------------------------------------------------------------------------------------                
+              // states para pagos pse @author alejandroquintero
                         .state('dashboard.compra', {
                             templateUrl: 'views/pagos/compra.html',
                             controller: 'pseController',
@@ -334,7 +336,7 @@ angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/Pagos/pseCtrls.js',
-                                            'scripts/pseFactories.js'
+                                            'scripts/factories/pseFactories.js'
                                         ]
                                     })
                                 }
@@ -350,7 +352,7 @@ angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/Pagos/pseCtrls.js',
-                                            'scripts/pseFactories.js'
+                                            'scripts/factories/pseFactories.js'
                                         ]
                                     })
                                 }
@@ -371,7 +373,7 @@ angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/Pagos/pseCtrls.js',
-                                            'scripts/pseFactories.js'
+                                            'scripts/factories/pseFactories.js'
                                         ]
                                     })
                                 }
@@ -387,7 +389,7 @@ angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/Pagos/pseCtrls.js',
-                                            'scripts/pseFactories.js'
+                                            'scripts/factories/pseFactories.js'
                                         ]
                                     })
                                 }
@@ -397,7 +399,95 @@ angular
                             templateUrl: 'views/pagos/summary.html',
                             url: '/summary'
                             
-                        })// fin de states para pagos pse @author alejandroquintero
+                        })
+                // fin de states para pagos pse @author alejandroquintero
+//-------------------------------------------------------------------------------------------------------                          
+                //inicio states para crud de usuario @author alejandroquintero
+                        .state('dashboard.registro', {
+                            templateUrl: 'views/Usuarios/registro.html',
+                            url: '/registro',
+                            controller: 'newAccount',
+                             resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                  
+                        .state('dashboard.actualizar', {
+                            templateUrl: 'views/Usuarios/editar.html',
+                            url: '/actualizar',
+                            controller: 'newAccount',
+                             resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                            
+                              
+                        }).state('dashboard.adminListar', {
+                            templateUrl: 'views/adminUsuarios/listar.html',
+                            url: '/administrador',
+                             controller: 'newAccount',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                         .state('dashboard.adminCrear', {
+                            templateUrl: 'views/adminUsuarios/crear.html',
+                            url: '/adminCrear',
+                            controller: 'newAccount',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                         .state('dashboard.adminEditar', {
+                            templateUrl: 'views/adminUsuarios/editar.html',
+                            url: '/adminEditar',
+                             controller: 'newAccount',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })   
+                        
+          //fin de states para crud de usuario @author alejandroquintero
+//--------------------------------------------------------------------------------------------------------          
                         .state('dashboard.panels-wells', {
                             templateUrl: 'views/ui-elements/panels-wells.html',
                             url: '/panels-wells'
@@ -448,6 +538,7 @@ angular
                                 }
                             }
                         })
+
                         .state('dashboard.buttons', {
                             templateUrl: 'views/ui-elements/buttons.html',
                             url: '/buttons'
