@@ -432,12 +432,28 @@ angular
                                             'scripts/controllers/Usuarios/usuCtrl.js',
                                             'scripts/factories/usuarios.js'
                                         ]
-                                    })
+                                    });
                                 }
                             }
                             
                               
-                        }).state('dashboard.adminListar', {
+                        }).state('dashboard.myPerfil', {
+                            templateUrl: 'views/Usuarios/myPerfil.html',
+                            url: '/myPerfil',
+                            controller: 'newAccount',
+                             resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/Usuarios/usuCtrl.js',
+                                            'scripts/factories/usuarios.js'
+                                        ]
+                                    })
+                                }
+                            }
+                        })
+                                .state('dashboard.adminListar', {
                             templateUrl: 'views/adminUsuarios/listar.html',
                             url: '/administrador',
                              controller: 'newAccount',
@@ -558,7 +574,7 @@ angular
                         .state('dashboard.grid', {
                             templateUrl: 'views/ui-elements/grid.html',
                             url: '/grid'
-                        })
+                        });
             }]);
 
 

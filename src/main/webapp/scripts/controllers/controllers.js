@@ -63,7 +63,7 @@ $scope.deleteUser = function (personaId) {
     }]);
 
 angular.module('sbAdminApp').factory('UsersFactory', function ($resource) {
-    return $resource('/StampUreStyle2.0/webresources/usuario', {}, {
+    return $resource('/Grupo04/webresources/usuario', {}, {
         query: {method: 'GET', isArray: true},
         create: {method: 'POST'}
     });
@@ -72,7 +72,7 @@ angular.module('sbAdminApp').factory('UsersFactory', function ($resource) {
 
 
 angular.module('sbAdminApp').factory('personFactory', function ($resource) {
-    return $resource('/StampUreStyle2.0/webresources/persona/:id', {}, {
+    return $resource('/Grupo04/webresources/persona/:id', {}, {
          query: {method: 'GET', isArray: true},
          show: {method: 'GET'}
       

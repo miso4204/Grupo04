@@ -18,17 +18,17 @@ app.controller('loginController', ['$scope', 'auth', 'UsersxperfilFactory',
         $scope.usersperfils = UsersxperfilFactory.query();
         $scope.login = function ()
         {
-            auth.login($scope.username, $scope.password, $scope.usersperfils);
+            auth.login($scope.username, $scope.password,$scope.usersperfils);
 
         }
     }]);
 
 
 app.factory('UsersxperfilFactory', function ($resource) {
-    return $resource('/StampUreStyle2.0/webresources/usuarioxperfil', {}, {
+    return $resource('/Grupo04/webresources/usuarioxperfil', {}, {
         query: {method: 'GET', isArray: true},
         create: {method: 'POST'}
-    })
+    });
 });
 
 
@@ -36,24 +36,29 @@ app.factory('UsersxperfilFactory', function ($resource) {
 app.factory('auth', function ($cookies, $cookieStore, $location)
 {
     return{
-        login: function (username, password, usersperfils)
+        login: function (username,password,usersperfils)
         {
              $cookies.username = null,
-                        $cookies.password = null;
+                    
+             $cookies.password = null;
+             
             var key = '';
             for (key in usersperfils)
             {
                 if (key != '$promise' && key != '$resolved') {
                     if (usersperfils[key]['usuId']['usuUsuario'] == username && usersperfils[key]['usuId']['usuContrasena'] == password) {
                         $cookies.username = username,
-                        $cookies.password = password;
+                     $cookies.password = password;
+                      $cookieStore.put("id",usersperfils[key]['usuId']);
+                       $cookieStore.put("admin",usersperfils[key]['perId']['perId']);
+                       console.log($cookies.admin);
                         break;
                     }
                 }
             }
       
       if($cookies.username == username){
-          $location.path("dashboard/home");
+          $location.path("dashboard/myPerfil");
       }else{
           $location.path("/loginBad");
         }
@@ -63,7 +68,9 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
         {
             //al hacer logout eliminamos la cookie con $cookieStore.remove
             $cookieStore.remove("username"),
+                    $cookieStore.remove("id"),
                     $cookieStore.remove("password");
+           
             //mandamos al login
             $location.path("/login");
         },

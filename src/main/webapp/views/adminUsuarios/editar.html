@@ -19,26 +19,31 @@
                                 <div class="form-group">
                                     <div class="form-group">
                                 <label>ID</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="user.usuId">
-                            </div>
+                                
+                                <input  class="form-control"   ng-model="editarUsuario.usuId.usuId" disabled  >
+                            </div><p></p><p></p>
                                 
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="user.perId.perPrimerNombre">
-                            </div>
+                                <input class="form-control" placeholder="Enter text" ng-model="editarUsuario.usuId.perId.perPrimerNombre">
+                            </div><p></p><p></p>
                                 <div class="form-group">
-                                <label>Apellido</label>
-                                <input class="form-control" placeholder="Enter text" ng-model="user.perId.perPrimerApelido">
-                            </div>
+                                    <label>Apellido</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="editarUsuario.usuId.perId.perPrimerApelido">
+                            </div><p></p><p></p>
                                  <div class="form-group">
-                                     <label>Tipo De Documento</label><P></p><p></p>
+                                     <label>Tipo De Documento</label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" ng-model="user.perId.perTipoDocumento" id="optionsRadiosInline1" value="CC" checked>Cedula
+                                    <input type="radio" name="optionsRadiosInline" ng-model="editarUsuario.usuId.perId.perTipoDocumento" id="optionsRadiosInline1" value="CC" checked>Cedula
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio" name="optionsRadiosInline" ng-model="user.perId.perTipoDocumento" id="optionsRadiosInline2" value="PS">Pasasporte
+                                    <input type="radio" name="optionsRadiosInline" ng-model="editarUsuario.usuId.perId.perTipoDocumento" id="optionsRadiosInline2" value="PS">Pasasporte
                                 </label>
-                                </div>
+                                </div><p></p><p></p>
+                                    <div class="form-group">
+                                <label>Documento Numero</label>
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perNumeroDocumento" placeholder="Enter text">
+                            </div><p></p><p></p>
                                  </div>
                               
                                
@@ -47,27 +52,24 @@
                     </div>
                                <div class="col-lg-6"> 
                                    <form role='form'>
-                                 <div class="form-group">
-                                <label>Documento Numero</label>
-                                <input class="form-control" ng-model="user.perId.perNumeroDocumento" placeholder="Enter text">
-                            </div>
+                                 
                                 <div class="form-group">
                                 <label>Email</label>
-                                <input class="form-control" ng-model="user.perId.perEmail" placeholder="Enter text">
-                            </div>
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perEmail" placeholder="Enter text">
+                            </div><p></p><p></p>
                                  
                                 <div class="form-group">
                                 <label>Direccion</label>
-                                <input class="form-control" ng-model="user.perId.perDireccion" placeholder="Enter text">
-                            </div>       
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perDireccion" placeholder="Enter text">
+                            </div>  <p></p><p></p>     
                                 <div class="form-group">
                                 <label>Contrasena</label>
-                                <input class="form-control" type="password" ng-model="user.usuContrasena" placeholder="Enter text">
-                            </div>
+                                <input class="form-control" type="password" ng-model="editarUsuario.usuId.usuContrasena" placeholder="Enter text">
+                            </div><p></p><p></p>
                                  <label>Usuario</label>
                                <div class="form-group input-group">
                                 <span class="input-group-addon">@</span>
-                                <input type="text" class="form-control" ng-model="user.usuUsuario" placeholder="Username">
+                                <input type="text" class="form-control" ng-model="editarUsuario.usuId.usuUsuario" placeholder="Username">
                             </div> 
                                  
                           
@@ -78,7 +80,7 @@
 
                 </div>
                 <!-- /.row (nested) -->
-               <button type="button" class="btn btn-primary btn-lg btn-block" ng-click="reset()">Reset</button>
+               
                                  <button type="button" ng-click="editando()" class="btn btn-primary btn-lg btn-block">editar</button>        
             </div>
             <!-- /.panel-body -->
