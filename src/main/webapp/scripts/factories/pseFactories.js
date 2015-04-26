@@ -21,36 +21,11 @@ angular.module('sbAdminApp').factory('pseFactories', function ($resource) {
 });
 
 angular.module('sbAdminApp').factory('listPurchase', function(){
-    return {
-        compraLista:
-                [{
-              "comId":"143",
-             "comValor":"50,000",
-              "comPais":"Colombia",
-              "comCiudad":"Bogota",
-              "comDireccion":"Chapinero",
-              "tipoPagId":"4",
-              "tarId":"234",
-              
-               usuId:{
-                "usuId":"123",
-                "usuUsuario":"@pomova",
-                "usuContrasena":"q123", 
-                
-                 perId:{
-                 "perId":"132",
-                 "perTipoDocumento":"CC",
-                 "perNumeroDocumento":"23434135",
-                "perPrimerNombre":"Alejandro",
-                 "perPrimerApelido":"Quintero",
-                 "perEmail":"al1989@yahoo.com",
-                 "perDireccion":"cra 120 #10-03"
-             }
-              },
-              "perId":"504"
-          }]};
-          
-        
+     return $resource('/StampUreStyle2.0/webresources/persona', {}, {
+        query: {method: 'GET', isArray: true},
+        create: {method: 'POST'}
+    });
+    
     
 });
 angular.module('sbAdminApp').factory('banco', function(){

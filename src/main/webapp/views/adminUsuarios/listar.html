@@ -35,19 +35,244 @@
                                 <td>{{usuario.usuId.usuUsuario}}</td>
                                 
                                 <td ><button type="button"  class="btn-small btn btn-danger" ng-click="borrar(usuario)" >borrar</button></td>
-                                <td ><button type="button" class="btn-small btn btn-primary" ng-click="goEditar(usuario)">Editar</button></td>
+                                <td ><button type="button" class="btn-small btn btn-primary" data-toggle="modal" data-target="#myModal" ng-click="goEditar(usuario)">Editar</button></td>
                             </tr>
                              
                         </tbody>
                         
                     </table>
                 </div>
+           <div class="row">
+                <div class="col-lg-6">
+                   
+                       
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Button trigger modal -->
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header"> 
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Aministrador</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                      <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              Editar Usuario
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form role="form">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                <label>ID</label>
+                                
+                                <input  class="form-control"   ng-model="editarUsuario.usuId.usuId" disabled  >
+                            </div><p></p><p></p>
+                                
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="editarUsuario.usuId.perId.perPrimerNombre">
+                            </div><p></p><p></p>
+                                <div class="form-group">
+                                    <label>Apellido</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="editarUsuario.usuId.perId.perPrimerApelido">
+                            </div><p></p><p></p>
+                                 <div class="form-group">
+                                     <label>Tipo De Documento</label><p></p><p></p>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="editarUsuario.usuId.perId.perTipoDocumento" id="optionsRadiosInline1" value="CC" checked>Cedula
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="editarUsuario.usuId.perId.perTipoDocumento" id="optionsRadiosInline2" value="PS">Pasasporte
+                                </label>
+                                </div><p></p><p></p>
+                                    <div class="form-group">
+                                <label>Documento Numero</label>
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perNumeroDocumento" placeholder="Enter text">
+                            </div><p></p><p></p>
+                                 </div>
+                              
+                               
+                            </div>
+                        </form> 
+                    </div>
+                               <div class="col-lg-6"> 
+                                   <form role='form'>
+                                 
+                                <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perEmail" placeholder="Enter text">
+                            </div><p></p><p></p>
+                                 
+                                <div class="form-group">
+                                <label>Direccion</label>
+                                <input class="form-control" ng-model="editarUsuario.usuId.perId.perDireccion" placeholder="Enter text">
+                            </div>  <p></p><p></p>     
+                                <div class="form-group">
+                                <label>Contrasena</label>
+                                <input class="form-control" type="password" ng-model="editarUsuario.usuId.usuContrasena" placeholder="Enter text">
+                            </div><p></p><p></p>
+                                 <label>Usuario</label>
+                               <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input type="text" class="form-control" ng-model="editarUsuario.usuId.usuUsuario" placeholder="Username">
+                            </div> 
+                                 
+                          
+                                   </form>  
+                               </div></div>
+                                            
+<!-- /.col-lg-6 (nested) -->
+
+                </div>
+                
                
+                                 
+            </div>
+            <!-- /.panel-body -->
+        </div>      
+                                            
+                                            
+                                            
+                                            </div>
+                                        <div class="modal-footer">
+                                         <button type="button" ng-click="editando()" class="btn btn-primary btn-lg btn-block" data-dismiss="modal">Guardar Cambios</button> 
+                                   
+                                           
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                        </div>
+                        <!-- .panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
            
            
                 
             </div>
-            <div><button class="btn btn-default btn-lg btn-block" ui-sref="dashboard.adminCrear">crear usuario</button></div>
+            <div>
+                <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            
+                                            <h4 class="modal-title" id="myModalLabel">Administrador</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                            
+                                            <div class="row">
+    
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+               Crear Usuario
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <form role="form">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label>Elija Tipo De Usuario</label><p></p><p></p>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRa" id="optionsRa" value="2" ng-model="perfil">Cliente
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRa" id="optionsRa" value="3" ng-model="perfil">Artista
+                                </label><p></p><p></p>
+                            <div class="form-group">
+                                <label>Nombre</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="person.perPrimerNombre">
+                            </div>
+                                <div class="form-group">
+                                <label>Apellido</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="person.perPrimerApelido">
+                            </div>
+                                    <div class="form-group">
+                                        <label>Tipo De Documento</label><p></p><p></p>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="person.perTipoDocumento" id="optionsRadiosInline1" value="CC" checked>Cedula
+                                </label>
+                                <label class="radio-inline">
+                                    <input type="radio" name="optionsRadiosInline" ng-model="person.perTipoDocumento" id="optionsRadiosInline2" value="TI">Pasaporte
+                                </label>
+                                </div>
+                                 <div class="form-group">
+                                <label>Documento Numero</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="person.perNumeroDocumento">
+                            </div>
+                                </div>
+                            </div>
+                        </form> 
+                    </div>
+                               <div class="col-lg-6"> 
+                                   <form role='form'>
+                                 <div class="form-group">
+                                <label>Direccion</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="person.perDireccion">
+                            </div>
+                                <div class="form-group">
+                                <label>Email</label>
+                                <input class="form-control" placeholder="Enter text" ng-model="person.perEmail">
+                            </div>
+                                <div class="form-group">
+                                <label>Contrasena</label>
+                                <input class="form-control" type="password" placeholder="Enter text" ng-model="usuario.usuContrasena">
+                            </div>
+                                 <label>Elija Usuario Para su cuenta</label>
+                               <div class="form-group input-group">
+                                <span class="input-group-addon">@</span>
+                                <input type="text" class="form-control" placeholder="Username" ng-model="usuario.usuUsuario">
+                            </div> 
+                               
+                          
+                                   </form>  
+                    </div>
+                                            
+<!-- /.col-lg-6 (nested) -->
+
+                </div>
+                <!-- /.row (nested) -->
+                 
+                          
+            </div>  
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+                         
+                                            </div>
+                                        <div class="modal-footer">
+                                           
+                                            <button type="button" class="btn btn-default btn-lg btn-block" ng-click="reset()">Reset</button>
+                                 <button type="button" class="btn btn-primary btn-lg btn-block" data-dismiss="modal" ng-click="cargarDatos()">Crear</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                <button class="btn btn-default btn-lg btn-block"  data-toggle="modal" data-target="#myModal1">crear usuario</button></div>
             <!-- /.panel-body -->
         </div>
         <!-- /.panel -->

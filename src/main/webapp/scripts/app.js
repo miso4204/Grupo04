@@ -267,7 +267,10 @@ angular
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
                                         files: [
-                                            'scripts/controllers/login.js'
+                                            'scripts/controllers/login.js',
+                                            'scripts/factories/usuarios.js'
+                                            
+                                           
                                         ]
                                     })
                                 }
@@ -282,7 +285,9 @@ angular
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
                                         files: [
-                                            'scripts/controllers/login.js'
+                                            'scripts/controllers/login.js',
+                                            'scripts/factories/usuarios.js'
+                                            
                                         ]
                                     })
                                 }
@@ -403,41 +408,9 @@ angular
                 // fin de states para pagos pse @author alejandroquintero
 //-------------------------------------------------------------------------------------------------------                          
                 //inicio states para crud de usuario @author alejandroquintero
-                        .state('dashboard.registro', {
-                            templateUrl: 'views/Usuarios/registro.html',
-                            url: '/registro',
-                            controller: 'newAccount',
-                             resolve: {
-                                loadMyFiles: function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load({
-                                        name: 'sbAdminApp',
-                                        files: [
-                                            'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
-                                        ]
-                                    })
-                                }
-                            }
-                        })
+                       
                   
-                        .state('dashboard.actualizar', {
-                            templateUrl: 'views/Usuarios/editar.html',
-                            url: '/actualizar',
-                            controller: 'newAccount',
-                             resolve: {
-                                loadMyFiles: function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load({
-                                        name: 'sbAdminApp',
-                                        files: [
-                                            'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
-                                        ]
-                                    });
-                                }
-                            }
-                            
-                              
-                        }).state('dashboard.myPerfil', {
+                        .state('dashboard.myPerfil', {
                             templateUrl: 'views/Usuarios/myPerfil.html',
                             url: '/myPerfil',
                             controller: 'newAccount',
@@ -469,38 +442,8 @@ angular
                                 }
                             }
                         })
-                         .state('dashboard.adminCrear', {
-                            templateUrl: 'views/adminUsuarios/crear.html',
-                            url: '/adminCrear',
-                            controller: 'newAccount',
-                            resolve: {
-                                loadMyFiles: function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load({
-                                        name: 'sbAdminApp',
-                                        files: [
-                                            'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
-                                        ]
-                                    })
-                                }
-                            }
-                        })
-                         .state('dashboard.adminEditar', {
-                            templateUrl: 'views/adminUsuarios/editar.html',
-                            url: '/adminEditar',
-                             controller: 'newAccount',
-                            resolve: {
-                                loadMyFiles: function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load({
-                                        name: 'sbAdminApp',
-                                        files: [
-                                            'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
-                                        ]
-                                    })
-                                }
-                            }
-                        })   
+                         
+                           
                         
           //fin de states para crud de usuario @author alejandroquintero
 //--------------------------------------------------------------------------------------------------------          
