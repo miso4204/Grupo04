@@ -5,14 +5,85 @@
 // - cart: the shopping cart object
 var app = angular.module("sbAdminApp");
 
- app.controller('storeController', function ($scope, DataService) {
+ app.controller('storeController', ['$scope','UsuarioFactoryCompra','DataService','$cookies','$timeout',
+     'TarjetaFactoryCompra','CompraFactory','TarjetasFactoryCompra','ComprasFactory','$location',
+     function ($scope,UsuarioFactoryCompra, DataService, $cookies, $timeout,
+     TarjetaFactoryCompra,CompraFactory,TarjetasFactoryCompra,ComprasFactory,$location) {
 
     // get store and cart from service
     $scope.store = DataService.store;
     $scope.cart = DataService.cart;
-
+    $scope.pagoTarjeta={direccion:null};
+    $scope.pagoTarjeta.usuario; 
+    $scope.usuarioLogin=JSON.parse($cookies.id);
+    $scope.pagoTarjeta.direccion=$scope.usuarioLogin.perId.perDireccion;
+    $scope.usuario=UsuarioFactoryCompra.show({id:1});
+    $scope.tipos = ["VISA","American Express","Master Card"];
+    $scope.siguienteId = CompraFactory.nextId();
+    $scope.tarjetasiguienteId = TarjetaFactoryCompra.nextId();
+    $timeout(function() {  
+      
+        $scope.prueba="as";
+        //$scope.pagoTarjeta.usuario=UsuarioFactoryCompra.show({id:1});
+        //console.log($scope.usuario);
+    
+  }, 2000); 
+$scope.createAction = function () {
+      var idTarjeta = '';
+      var idCompra = '';
+      var key='';
+        for (key in $scope.tarjetasiguienteId)
+        {
+            if (key === '$promise')break;
+            idTarjeta=idTarjeta+$scope.tarjetasiguienteId[key];
+        }
+       for (key in $scope.siguienteId)
+        {
+            if (key === '$promise')break;
+            idCompra=idCompra+$scope.siguienteId[key];
+        }
+        
+       var tarjeta={persona:null,tarNumero:null,tarFechaExpiracion:null,tarCodigoSeguridad:null,tarTipo:null,
+                   tarjetacreditoPK:null};
+       var validaHasta=$scope.pagoTarjeta.validaHasta;
+       var validaHastaArray=validaHasta.split("/");
+       var validadhastaFecha=new Date("20"+validaHastaArray[1]+"-"+validaHastaArray[0]+"-01");
+        console.log("asd"+validadhastaFecha);
+       tarjeta.tarTipo=$scope.pagoTarjeta.tipo;
+       tarjeta.tarNumero=$scope.pagoTarjeta.numTarjeta;
+       tarjeta.tarFechaExpiracion=validadhastaFecha;
+       tarjeta.tarCodigoSeguridad=$scope.pagoTarjeta.cvc;
+       tarjeta.persona=$scope.usuarioLogin.perId;
+       
+       tarjeta.tarjetacreditoPK={perId:$scope.usuarioLogin.perId.perId, tarId:idTarjeta};
+       
+       TarjetasFactoryCompra.create(tarjeta);
+      $timeout(function() {
+        var compra={comCiudad:null,comDireccion:null,comId:null,comPais:null,comValor:null,tarjetacredito:null,
+            tipPagId:{tipPagId:1,tipPagNombre:"Tarjeta de CrÃ©dito"},usuId:null};
+        compra.comCiudad=$scope.pagoTarjeta.ciudad;
+        compra.comDireccion=$scope.pagoTarjeta.direccion;
+        compra.comPais=$scope.pagoTarjeta.pais;
+        compra.comValor=$scope.cart.getTotalPrice();
+        compra.tarjetacredito=tarjeta;
+        compra.usuId=$scope.usuarioLogin;
+        compra.comId=idCompra;
+        console.log('VALOR: '+compra.comValor);
+        ComprasFactory.create(compra);
+        $location.path('dashboard/summary');
+       }, 1000);
+       
+       
+       
+      
+  };
+ 
+ 
+ 
+    //$scope.pagoTarjeta.direccion=
+    
     // use routing to pick the selected product
-});
+}]);
 
 app.factory("DataService", function () {
 
@@ -61,4 +132,44 @@ app.factory("DataService", function () {
         store: myStore,
         cart: myCart
     };
+});
+
+app.factory('UsuarioFactoryCompra', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/usuario/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}}
+    });
+});
+app.factory('TarjetasFactoryCompra', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/tarjetacredito', {}, 
+    {
+        query: { method: 'GET', isArray: true  },
+        create: { method: 'POST' }
+        
+    });
+});
+app.factory('TarjetaFactoryCompra', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/tarjetacredito/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId:{ method: 'GET', params: {id: 'nextId'}, isArray: false }
+    });
+});
+app.factory('ComprasFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/compra', {}, 
+    {
+        query: { method: 'GET', isArray: true  },
+        create: { method: 'POST' }
+        
+    });
+});
+app.factory('CompraFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/compra/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId:{ method: 'GET', params: {id: 'nextId'}, isArray: false }
+    });
 });

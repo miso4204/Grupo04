@@ -39,7 +39,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Tarjetacredito.findByTarFechaExpiracion", query = "SELECT t FROM Tarjetacredito t WHERE t.tarFechaExpiracion = :tarFechaExpiracion"),
     @NamedQuery(name = "Tarjetacredito.findByTarCodigoSeguridad", query = "SELECT t FROM Tarjetacredito t WHERE t.tarCodigoSeguridad = :tarCodigoSeguridad"),
     @NamedQuery(name = "Tarjetacredito.findByTarTipo", query = "SELECT t FROM Tarjetacredito t WHERE t.tarTipo = :tarTipo"),
-    @NamedQuery(name = "Tarjetacredito.findByPerId", query = "SELECT t FROM Tarjetacredito t WHERE t.tarjetacreditoPK.perId = :perId")})
+    @NamedQuery(name = "Tarjetacredito.findByPerId", query = "SELECT t FROM Tarjetacredito t WHERE t.tarjetacreditoPK.perId = :perId"),
+    @NamedQuery(name = "Tarjetacredito.findNextId", query = "SELECT max(t.tarjetacreditoPK.tarId)+1 FROM Tarjetacredito t")})
 public class Tarjetacredito implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

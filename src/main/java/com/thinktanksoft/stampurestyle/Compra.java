@@ -38,7 +38,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Compra.findByComValor", query = "SELECT c FROM Compra c WHERE c.comValor = :comValor"),
     @NamedQuery(name = "Compra.findByComPais", query = "SELECT c FROM Compra c WHERE c.comPais = :comPais"),
     @NamedQuery(name = "Compra.findByComCiudad", query = "SELECT c FROM Compra c WHERE c.comCiudad = :comCiudad"),
-    @NamedQuery(name = "Compra.findByComDireccion", query = "SELECT c FROM Compra c WHERE c.comDireccion = :comDireccion")})
+    @NamedQuery(name = "Compra.findByComDireccion", query = "SELECT c FROM Compra c WHERE c.comDireccion = :comDireccion"),
+    @NamedQuery(name = "Compra.findNextId", query = "SELECT max(c.comId)+1 FROM Compra c")})
 public class Compra implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -26,7 +27,7 @@ import javax.ws.rs.core.PathSegment;
  * @author yerson
  */
 @Stateless
-@Path("com.thinktanksoft.stampurestyle.tarjetacredito")
+@Path("tarjetacredito")
 public class TarjetacreditoFacadeREST extends AbstractFacade<Tarjetacredito> {
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
     private EntityManager em;
@@ -58,14 +59,14 @@ public class TarjetacreditoFacadeREST extends AbstractFacade<Tarjetacredito> {
 
     @POST
     @Override
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void create(Tarjetacredito entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void edit(@PathParam("id") PathSegment id, Tarjetacredito entity) {
         super.edit(entity);
     }
@@ -79,7 +80,7 @@ public class TarjetacreditoFacadeREST extends AbstractFacade<Tarjetacredito> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public Tarjetacredito find(@PathParam("id") PathSegment id) {
         com.thinktanksoft.stampurestyle.TarjetacreditoPK key = getPrimaryKey(id);
         return super.find(key);
@@ -87,14 +88,14 @@ public class TarjetacreditoFacadeREST extends AbstractFacade<Tarjetacredito> {
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Tarjetacredito> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Tarjetacredito> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -104,6 +105,17 @@ public class TarjetacreditoFacadeREST extends AbstractFacade<Tarjetacredito> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    @GET
+    @Path("nextId")
+    @Produces("text/plain")
+    public int siguienteId() {
+        
+        TypedQuery<Integer> query =
+            getEntityManager().createNamedQuery("Tarjetacredito.findNextId", Integer.class);
+        int id =query.getSingleResult();
+        
+        return id;
     }
 
     @Override

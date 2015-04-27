@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -24,7 +25,7 @@ import javax.ws.rs.Produces;
  * @author yerson
  */
 @Stateless
-@Path("com.thinktanksoft.stampurestyle.compra")
+@Path("compra")
 public class CompraFacadeREST extends AbstractFacade<Compra> {
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
     private EntityManager em;
@@ -35,14 +36,14 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
 
     @POST
     @Override
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void create(Compra entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void edit(@PathParam("id") Integer id, Compra entity) {
         super.edit(entity);
     }
@@ -55,21 +56,21 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public Compra find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Compra> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Compra> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
@@ -80,10 +81,23 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("nextId")
+    @Produces("text/plain")
+    public int siguienteId() {
+        
+        TypedQuery<Integer> query =
+            getEntityManager().createNamedQuery("Compra.findNextId", Integer.class);
+        int id =query.getSingleResult();
+        
+        return id;
+    }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
+    
     
 }

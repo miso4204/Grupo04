@@ -25,7 +25,7 @@ app.controller('loginController', ['$scope', 'auth', 'UsersxperfilFactory',
 
 
 app.factory('UsersxperfilFactory', function ($resource) {
-    return $resource('/Grupo04/webresources/usuarioxperfil', {}, {
+    return $resource('/StampUreStyle2.0/webresources/usuarioxperfil', {}, {
         query: {method: 'GET', isArray: true},
         create: {method: 'POST'}
     });

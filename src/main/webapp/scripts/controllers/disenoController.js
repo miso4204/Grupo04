@@ -1,9 +1,9 @@
 //Este controlador lo maneja la pagina diseno-list y 
 //borra y envia a la pagina de crear y actualizar diseño
 angular.module('sbAdminApp').controller('DisenoCtrl', ['$scope','DisenosFactory','DisenoFactory',
-    'CategoriasFactoryD','EstilosFactoryD','$location',
+    'CategoriasFactoryD','EstilosFactoryD','$location','$cookies',
     function ($scope, DisenosFactory, DisenoFactory, 
-    CategoriasFactoryD,EstilosFactoryD,$location) {
+    CategoriasFactoryD,EstilosFactoryD,$location, $cookies) {
         
         
         $scope.IMAGE_LOCATION = "./data/";
@@ -66,10 +66,13 @@ angular.module('sbAdminApp').controller('DisenoCtrl', ['$scope','DisenosFactory'
             //console.log("id"+id);
             $scope.disenoc.disId=id;
             $scope.disenoc.catId=$scope.cat;
-            $scope.disenoc.usuId={"perId":{"perDireccion":"La casa de la esquina","perEmail":"cedamogue@gmail.com","perId":1,"perNumeroDocumento":"1032411208","perPrimerApelido":"MontaÃ±ez","perPrimerNombre":"CÃ©sar","perTipoDocumento":"cc"},"usuContrasena":"cmontanez","usuId":1,"usuUsuario":"cmontanez"};
+            $scope.usuarioLogin=JSON.parse($cookies.id);
+            //$scope.disenoc.usuId={"perId":{"perDireccion":"La casa de la esquina","perEmail":"cedamogue@gmail.com","perId":1,"perNumeroDocumento":"1032411208","perPrimerApelido":"MontaÃ±ez","perPrimerNombre":"CÃ©sar","perTipoDocumento":"cc"},"usuContrasena":"cmontanez","usuId":1,"usuUsuario":"cmontanez"};
+            $scope.disenoc.usuId=$scope.usuarioLogin;
+            console.log(JSON.stringify($scope.disenoc));
             $scope.disenoc.estId=$scope.est;
             $scope.disenoc.disNumeroVentas=0;
-            console.log(JSON.stringify($scope.disenoc));
+            
             DisenosFactory.create($scope.disenoc);
             $location.path('dashboard/diseno-list');
         };
