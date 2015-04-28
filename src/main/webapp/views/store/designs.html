@@ -42,7 +42,7 @@
                     <tr>
                         <td colspan="3">
                             <p class="text-center">
-                                <img ng-src="img/products/{{product.proUrl}}.jpg" alt="{{product.proNombre}}"/>
+                                <img ng-src="img/products/{{product.proUrl}}" alt="{{product.proNombre}}"/>
                             </p> 
                         </td>
                     </tr>
@@ -57,8 +57,8 @@
                                         </p>
                                         <!-- Button trigger modal -->
                                         <div  class=" panel panel-default col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="design in desings| orderBy:'disNombre'  | filter:search">
-                                            <p class="panel-body" data-toggle="modal" data-target="#myModal{{design.disUrl}}">
-                                                <img ng-src="data/{{design.disUrl}}.jpg" width='100' height='100' alt="{{design.disNombre}}"/>
+                                            <p class="panel-body" data-toggle="modal" data-target="#myModal{{design.disId}}">
+                                                <img ng-src="data/{{design.disUrl}}" width='100' height='100' alt="{{design.disNombre}}"/>
                                             </p>
                                             <!-- Modal -->
                                         </div>
@@ -67,7 +67,7 @@
                                 </div>
 
                                 <div  ng-repeat="design in desings">
-                                    <div class="modal fade" id="myModal{{design.disUrl}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="myModal{{design.disId}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
@@ -79,7 +79,7 @@
                                                         <tr>
                                                             <td colspan="2">
                                                                 <p class="text-center">
-                                                                    <img ng-src="data/{{design.disUrl}}.jpg" width='200' height='200' alt="{{design.disNombre}}"/>
+                                                                    <img ng-src=" data/{{design.disUrl}}" width='200' height='200' alt="{{design.disNombre}}"/>
                                                                 </p> 
                                                             </td>
                                                         </tr>

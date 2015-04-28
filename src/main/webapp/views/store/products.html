@@ -27,7 +27,7 @@
                     <div  class=" panel panel-default col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="product in products| orderBy:'proNombre'  | filter:search">
                         <a class="center-block" href="#/dashboard/designs/{{product.proId}}">
                             <p>
-                                <img ng-src="img/products/{{product.proUrl}}.jpg"  width='150' height='150' alt="{{product.proNombre}}"/>
+                                <img ng-src="img/products/{{product.proUrl}}"  width='150' height='150' alt="{{product.proNombre}}"/>
                             </p>
                         </a>
                         <!-- Modal -->
@@ -58,7 +58,7 @@
                 <tbody>
                     <tr ng-repeat="product in products| orderBy:'proNombre' | filter:search">
                         <td class="tdCenter">
-                            <img ng-src="img/products/{{product.proUrl}}.jpg" alt="{{ product.proNombre}}" />
+                            <img ng-src="img/products/{{product.proUrl}}" alt="{{ product.proNombre}}" />
                         </td>
                         <td class="tdCenter">
                             <a href="#/dashboard/designs/{{product.proId}}"><b>{{ product.proNombre}}</b></a><br />
