@@ -1,26 +1,26 @@
 ﻿//----------------------------------------------------------------
 // shopping cart
-//
-function shoppingCart(cartName) {
-    this.cartName = cartName;
-    this.clearCart = false;
-    this.checkoutParameters = {};
-    this.items = [];
-    this.designs = [];
+//product
+        function shoppingCart(cartName) {
+            this.cartName = cartName;
+            this.clearCart = false;
+            this.checkoutParameters = {};
+            this.items = [];
+            this.designs = [];
 
-    // load items from local storage when initializing
-    this.loadItems();
+            // load items from local storage when initializing
+            this.loadItems();
 
-    // save items to local storage when unloading
-    var self = this;
-    $(window).unload(function () {
-        if (self.clearCart) {
-            self.clearItems();
+            // save items to local storage when unloading
+            var self = this;
+            $(window).unload(function () {
+                if (self.clearCart) {
+                    self.clearItems();
+                }
+                self.saveItems();
+                self.clearCart = false;
+            });
         }
-        self.saveItems();
-        self.clearCart = false;
-    });
-}
 
 // load items from local storage
 shoppingCart.prototype.loadItems = function () {
@@ -31,7 +31,7 @@ shoppingCart.prototype.loadItems = function () {
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 if (item.sku != null && item.name != null && item.price != null && item.quantity != null) {
-                    item = new cartItem(item.sku, item.name, item.price, item.quantity);
+                    item = new cartItem(i, item.sku, item.name, item.price, item.quantity, item.designsPro);
                     this.items.push(item);
                 }
             }
@@ -50,7 +50,7 @@ shoppingCart.prototype.saveItems = function () {
 }
 
 // adds an item to the cart
-shoppingCart.prototype.addItem = function (sku, name, price, quantity) {
+shoppingCart.prototype.addItem = function (id, sku, name, price, quantity) {
     quantity = this.toNumber(quantity);
     if (quantity != 0) {
 
@@ -58,7 +58,7 @@ shoppingCart.prototype.addItem = function (sku, name, price, quantity) {
         var found = false;
         for (var i = 0; i < this.items.length && !found; i++) {
             var item = this.items[i];
-            if (item.sku == sku) {
+            if (item.id == id) {
                 found = true;
                 item.quantity = this.toNumber(item.quantity + quantity);
                 if (item.quantity <= 0) {
@@ -67,11 +67,66 @@ shoppingCart.prototype.addItem = function (sku, name, price, quantity) {
             }
         }
 
-        // new item, add now
-        if (!found) {
-            var item = new cartItem(sku, name, price, quantity);
-            this.items.push(item);
+        // save changes
+        this.saveItems();
+    }
+}
+
+
+shoppingCart.prototype.removeItem = function (sku, name, price, quantity) {
+    quantity = this.toNumber(quantity);
+    if (quantity != 0) {
+
+        // update quantity for existing item
+        var found = false;
+        for (var i = 0; i < this.items.length && !found; i++) {
+            var item = this.items[i];
+            if (item.sku === sku) {
+                found = true;
+                item.quantity = this.toNumber(item.quantity + quantity);
+                if (item.quantity <= 0) {
+                    this.items.splice(i, 1);
+                }
+            }
         }
+
+        // save changes
+        this.saveItems();
+    }
+}
+
+
+// adds an product to the cart
+shoppingCart.prototype.addProduct = function (sku, name, price, quantity) {
+    quantity = this.toNumber(quantity);
+    var id = 1;
+    if (quantity != 0) {
+
+        // update quantity for existing item
+        var found = false;
+        for (var i = 0; i < this.items.length && !found; i++) {
+            id = id + 1;
+        }
+        // new item, add now
+
+        var item = new cartItem(id, sku, name, price, quantity, this.designs);
+        console.log("Objeto----" + item);
+        this.items.push(item);
+        this.designs = [];
+
+        // save changes
+        this.saveItems();
+    }
+}
+
+shoppingCart.prototype.addDesign = function (sku, name, price, quantity) {
+    quantity = this.toNumber(quantity);
+    var id = this.items.length + 1;
+    console.log("IDDesing->>>>>" + id);
+    if (quantity != 0) {
+
+        var design = new cartDesing(id, sku, name, price, quantity);
+        this.designs.push(design);
 
         // save changes
         this.saveItems();
@@ -81,12 +136,22 @@ shoppingCart.prototype.addItem = function (sku, name, price, quantity) {
 
 
 // get the total price for all items currently in the cart
-shoppingCart.prototype.getTotalPrice = function (sku) {
+shoppingCart.prototype.getTotalPrice = function (id) {
     var total = 0;
     for (var i = 0; i < this.items.length; i++) {
         var item = this.items[i];
-        if (sku == null || item.sku == sku) {
+        if (id == null || item.id == id) {
             total += this.toNumber(item.quantity * item.price);
+            console.log("Item cantidad" + item.quantity);
+            if (item.designsPro === undefined) {
+                console.log("El producto no tiene diseños");
+            } else {
+                for (var j = 0; j < item.designsPro.length; j++) {
+                    var des = item.designsPro[j];
+                    total += this.toNumber(item.quantity * des.price);
+                    console.log("tiene diseños y valen " + this.toNumber(item.quantity * des.price));
+                }
+            }
         }
     }
     return total;
@@ -107,6 +172,7 @@ shoppingCart.prototype.getTotalCount = function (sku) {
 // clear the cart
 shoppingCart.prototype.clearItems = function () {
     this.items = [];
+    this.designs = [];
     this.saveItems();
 }
 
@@ -286,7 +352,7 @@ shoppingCart.prototype.checkoutStripe = function (parms, clearCart) {
         var $input = $('<input type=hidden name=stripeToken />').val(res.id);
 
         // show processing message and block UI until form is submitted and returns
-        $.blockUI({ message: 'Processing order...' });
+        $.blockUI({message: 'Processing order...'});
 
         // submit form
         form.append($input).submit();
@@ -297,7 +363,7 @@ shoppingCart.prototype.checkoutStripe = function (parms, clearCart) {
     StripeCheckout.open({
         key: parms.merchantID,
         address: false,
-        amount: this.getTotalPrice() *100, /** expects an integer **/
+        amount: this.getTotalPrice() * 100, /** expects an integer **/
         currency: 'usd',
         name: 'Purchase',
         description: 'Description',
@@ -334,10 +400,54 @@ function checkoutParameters(serviceName, merchantID, options) {
 //----------------------------------------------------------------
 // items in the cart
 //
-function cartItem(sku, name, price, quantity) {
+function cartItem(id, sku, name, price, quantity, designsPro) {
+    this.id = id;
+    this.sku = sku;
+    this.name = name;
+    this.price = price * 1;
+    this.quantity = quantity * 1;
+    this.designsPro = designsPro;
+}
+
+function cartDesing(id, sku, name, price, quantity) {
+    this.id = id;
     this.sku = sku;
     this.name = name;
     this.price = price * 1;
     this.quantity = quantity * 1;
 }
 
+
+shoppingCart.prototype.listarProductos = function () {
+    var data = {};
+    // item data
+    for (var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        var ctr = i + 1;
+        data["item_name_" + ctr] = item.sku;
+        data["item_description_" + ctr] = item.name;
+        data["item_price_" + ctr] = item.price.toFixed(2);
+        data["item_quantity_" + ctr] = item.quantity;
+        console.log("ID--->>>>>" + item.id);
+        console.log("Producto--->>>>>" + item.sku);
+        console.log("Nombre--->>>>>" + item.name);
+    }
+}
+
+shoppingCart.prototype.getPrice = function (id) {
+    var price = 0;
+    for (var i = 0; i < this.items.length; i++) {
+        var item = this.items[i];
+        if (item.id === id) {
+            price += this.toNumber(item.price);
+            if (item.designsPro === undefined) {
+            } else {
+                for (var j = 0; j < item.designsPro.length; j++) {
+                    var des = item.designsPro[j];
+                    price += this.toNumber(des.quantity * des.price);
+                }
+            }
+        }
+    }
+    return price;
+}
