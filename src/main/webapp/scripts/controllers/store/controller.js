@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
  app.controller('storeController', ['$scope','UsuarioFactoryCompra','DataService','$cookies','$timeout',
-     'TarjetaFactoryCompra','CompraFactory','TarjetasFactoryCompra','ComprasFactory','$location',
+     'TarjetaFactoryCompra','CompraFactory','TarjetasFactoryCompra','ComprasFactory','$location','bancos',
      function ($scope,UsuarioFactoryCompra, DataService, $cookies, $timeout,
-     TarjetaFactoryCompra,CompraFactory,TarjetasFactoryCompra,ComprasFactory,$location) {
+     TarjetaFactoryCompra,CompraFactory,TarjetasFactoryCompra,ComprasFactory,$location,bancos) {
 
     // get store and cart from service
     $scope.store = DataService.store;
@@ -21,13 +21,11 @@ var app = angular.module("sbAdminApp");
     $scope.tipos = ["VISA","American Express","Master Card"];
     $scope.siguienteId = CompraFactory.nextId();
     $scope.tarjetasiguienteId = TarjetaFactoryCompra.nextId();
-    $timeout(function() {  
-      
-        $scope.prueba="as";
-        //$scope.pagoTarjeta.usuario=UsuarioFactoryCompra.show({id:1});
-        //console.log($scope.usuario);
     
-  }, 2000); 
+    $scope.pagoPSE={direccion:null};
+    $scope.pseBanco=bancos.bancos;
+    $scope.pagoPSE.direccion=$scope.usuarioLogin.perId.perDireccion;
+    
 $scope.createAction = function () {
       var idTarjeta = '';
       var idCompra = '';
@@ -77,12 +75,30 @@ $scope.createAction = function () {
        
       
   };
- 
- 
- 
-    //$scope.pagoTarjeta.direccion=
-    
-    // use routing to pick the selected product
+ $scope.createbyPSE = function () {
+      
+      var idCompra = '';
+      var key='';
+        
+       for (key in $scope.siguienteId)
+        {
+            if (key === '$promise')break;
+            idCompra=idCompra+$scope.siguienteId[key];
+        }
+        
+        var compra={comCiudad:null,comDireccion:null,comId:null,comPais:null,comValor:null,tarjetacredito:null,
+            tipPagId:{tipPagId:2,tipPagNombre:"PSE"},usuId:null};
+        compra.comCiudad=$scope.pagoPSE.ciudad;
+        compra.comDireccion=$scope.pagoPSE.direccion;
+        compra.comPais=$scope.pagoPSE.pais;
+        compra.comValor=$scope.cart.getTotalPrice();
+        compra.usuId=$scope.usuarioLogin;
+        compra.comId=idCompra;
+        console.log('VALOR: '+compra.comValor);
+        ComprasFactory.create(compra);
+        $location.path('dashboard/summary');
+       
+  };
 }]);
 
 app.factory("DataService", function () {
@@ -173,3 +189,28 @@ app.factory('CompraFactory', function ($resource) {
         nextId:{ method: 'GET', params: {id: 'nextId'}, isArray: false }
     });
 });
+
+app.factory('bancos', function(){
+    return { bancos:[{
+                "nombre":"Bancolombia"
+            },{
+                "nombre":"Davivienda"
+            },{
+                "nombre":"Banco De Occidente"
+            },{
+                "nombre":"AVvillas"
+            },{
+                "nombre":"Colpatria"
+            },{
+                "nombre":"Citibank"
+            },{
+                "nombre":"Banco de Bogota"
+            },{
+                "nombre":"Helm Bank"
+            },{
+                "nombre":"Scotia Bank"
+            }]
+        
+        
+        
+    }});
