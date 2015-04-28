@@ -14,7 +14,8 @@
 
                     <!-- header -->
                     <tr class="well">
-                        <td><b>Item</b></td>
+                        <td><b>Product</b></td>
+                        <td><b>Desing</b></td>
                         <td class="tdCenter"><b>Quantity</b></td>
                         <td class="tdRight"><b>Price</b></td>
                         <td />
@@ -30,6 +31,14 @@
                     <!-- cart items -->
                     <tr ng-repeat="item in cart.items| orderBy:'name'">
                         <td>{{item.name}}</td>
+                        <td>
+                            <div class="input-append">
+                                <p ng-repeat="design in item.designsPro" >
+                                    {{design.name}}         
+                                </p>
+                            </div>
+
+                        </td>
                         <td class="tdCenter">
                             <div class="input-append">
                                 <!-- use type=tel instead of  to prevent spinners -->
@@ -40,24 +49,24 @@
                                 <button 
                                     class="btn btn-success" type="button" 
                                     ng-disabled="item.quantity >= 1000"
-                                    ng-click="cart.addItem(item.sku, item.name, item.price, +1)">+</button>
+                                    ng-click="cart.addItem(item.id, item.sku, item.name, item.price, +1)">+</button>
                                 <button 
                                     class="btn btn-inverse" type="button" 
                                     ng-disabled="item.quantity <= 1"
-                                    ng-click="cart.addItem(item.sku, item.name, item.price, -1)">-</button>
+                                    ng-click="cart.addItem(item.id, item.sku, item.name, item.price, -1)">-</button>
                             </div>
                         </td>
-                        <td class="tdRight">{{item.price * item.quantity| currency}}</td>
+                        <td class="tdRight">{{cart.getPrice(item.id) * item.quantity | currency}}</td>
                         <td class="tdCenter" title="remove from cart">
-                            <a href="" ng-click="cart.addItem(item.sku, item.name, item.price, -10000000)" >
-                                <i class="icon-remove" />
+                            <a href="" ng-click="cart.addItem(item.id, item.sku, item.name, item.price, -10000000)" >
+                                <i class="fa fa-times" />
                             </a>
                         </td>
                     </tr>
 
                     <!-- footer -->
                     <tr class="well">
-                        <td><b>Total</b></td>
+                        <td colspan="2"><b>Total</b></td>
                         <td class="tdCenter"><b>{{cart.getTotalCount()}}</b></td>
                         <td class="tdRight"><b>{{cart.getTotalPrice() | currency}}</b></td>
                         <td />
@@ -95,75 +104,76 @@
                         <img src="http://www.iconmay.com/thumbnails/detail/3/credit%20card%20payment%20method%20paying%20charge%20online%20payments%20credit%20card%20icon.png" alt="checkout Credit Card"/>
                     </button> 
                     <!-- Modal -->
-                    <div class="modal fade" id="modalCreditCart" tabindex="-1" role="dialog" aria-labelledby="modalCreditCart" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    <h4 class="modal-title" id="modalCreditCart">Pagar con tarjeta de Crédito</h4>
+                <div class="modal fade" id="modalCreditCart" tabindex="-1" role="dialog" aria-labelledby="modalCreditCart" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="modalCreditCart">Pagar con tarjeta de Crédito</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="pais" >País</label>
+                                    <input class="form-control" id="pais" type="text" placeholder="País" 
+                                           ng-value="{{pagoTarjeta.pais}}" ng-model="pagoTarjeta.pais">
                                 </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="pais" >País</label>
-                                        <input class="form-control" id="pais" type="text" placeholder="País" 
-                                                ng-value="{{pagoTarjeta.pais}}" ng-model="pagoTarjeta.pais">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="ciudad" >Ciudad</label>
-                                        <input class="form-control" id="ciudad" type="text" placeholder="Ciudad" 
-                                               ng-disabled="disabled" ng-value="{{pagoTarjeta.ciudad}}" ng-model="pagoTarjeta.ciudad">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion" >Dirección</label>
-                                        <input class="form-control" id="direccion" type="text" placeholder="Direccion" 
-                                               ng-disabled="disabled" ng-value="{{pagoTarjeta.direccion}}" ng-model="pagoTarjeta.direccion">
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Tipo</label>
-                                        <select class="form-control" ng-model="pagoTarjeta.tipo" ng-if="!disabled"
-                                                ng-options="tipo for tipo in tipos" 
-                                                id="selectTipos" >
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="direccion" >Número Tarjeta</label>
-                                        <input class="form-control" id="numTarjeta" type="text" placeholder="Número de Tarjeta" 
-                                               ng-disabled="disabled" ng-value="{{pagoTarjeta.numTarjeta}}" ng-model="pagoTarjeta.numTarjeta">
-                                    </div>
-                                    <div class="form-group">
-                                        <input class="tdCenter" id="validaHasta" type="text" placeholder="MM/YY" 
-                                               ng-disabled="disabled" ng-value="{{pagoTarjeta.validaHasta}}" ng-model="pagoTarjeta.validaHasta">
-                                        <input class="tdRight" id="CVC" type="text" placeholder="cvc" 
-                                               ng-disabled="disabled" ng-value="{{pagoTarjeta.cvc}}" ng-model="pagoTarjeta.cvc">
-                                    </div>
-                                   
-                                    <label  >Total:</label>
-                                    <div class="form-group input-group">
-                                        <span class="input-group-addon"><b>{{cart.getTotalPrice() | currency}}</b></span>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="ciudad" >Ciudad</label>
+                                    <input class="form-control" id="ciudad" type="text" placeholder="Ciudad" 
+                                           ng-disabled="disabled" ng-value="{{pagoTarjeta.ciudad}}" ng-model="pagoTarjeta.ciudad">
                                 </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                    <button type="button" class="btn btn-primary" ng-click="createAction()">Checkout</button>
+                                <div class="form-group">
+                                    <label for="direccion" >Dirección</label>
+                                    <input class="form-control" id="direccion" type="text" placeholder="Direccion" 
+                                           ng-disabled="disabled" ng-value="{{pagoTarjeta.direccion}}" ng-model="pagoTarjeta.direccion">
+                                </div>
+                                <div class="form-group">
+                                    <label>Tipo</label>
+                                    <select class="form-control" ng-model="pagoTarjeta.tipo" ng-if="!disabled"
+                                            ng-options="tipo for tipo in tipos" 
+                                            id="selectTipos" >
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="direccion" >Número Tarjeta</label>
+                                    <input class="form-control" id="numTarjeta" type="text" placeholder="Número de Tarjeta" 
+                                           ng-disabled="disabled" ng-value="{{pagoTarjeta.numTarjeta}}" ng-model="pagoTarjeta.numTarjeta">
+                                </div>
+                                <div class="form-group">
+                                    <input class="tdCenter" id="validaHasta" type="text" placeholder="MM/YY" 
+                                           ng-disabled="disabled" ng-value="{{pagoTarjeta.validaHasta}}" ng-model="pagoTarjeta.validaHasta">
+                                    <input class="tdRight" id="CVC" type="text" placeholder="cvc" 
+                                           ng-disabled="disabled" ng-value="{{pagoTarjeta.cvc}}" ng-model="pagoTarjeta.cvc">
+                                </div>
+
+                                <label  >Total:</label>
+                                <div class="form-group input-group">
+                                    <span class="input-group-addon"><b>{{cart.getTotalPrice() | currency}}</b></span>
                                 </div>
                             </div>
-                            <!-- /.modal-content -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <button type="button" class="btn btn-primary" ng-click="createAction()">Checkout</button>
+                            </div>
                         </div>
-                        <!-- /.modal-dialog -->
-                            </div>
-                            <!-- /.modal -->
-                    <button 
-                        class="btn btn-block btn-primary" 
-                        ng-click="cart.checkout('PayPal')" 
-                        ng-disabled="cart.getTotalCount() < 1">
-                        <i class="icon-ok icon-white" /> check out using PSE
-                    </button>
-                    <button 
-                        class="btn btn-block btn-link" 
-                        ng-click="cart.checkout('PayPal')" 
-                        ng-disabled="cart.getTotalCount() < 1" >
-                        <img src="http://www.siminmueble.com/s1m1w3bj00mla/images/stories/img-3.jpg" alt="checkoutGoogle"/>
-                    </button>   
+                        <!-- /.modal-content -->
+                    </div>
+                    <!-- /.modal-dialog -->
+                </div>
+
+
+                <button 
+                    class="btn btn-block btn-primary" 
+                    ng-click="cart.checkout('PayPal')" 
+                    ng-disabled="cart.getTotalCount() < 1">
+                    <i class="icon-ok icon-white" /> check out using PSE
+                </button>
+                <button 
+                    class="btn btn-block btn-link" 
+                    ng-click="cart.checkout('PayPal')" 
+                    ng-disabled="cart.getTotalCount() < 1" >
+                    <img src="http://www.siminmueble.com/s1m1w3bj00mla/images/stories/img-3.jpg" alt="checkoutGoogle"/>
+                </button>   
                 </p>
                 <!-- Stripe needs a form to post to -->
                 <form class="form-stripe"></form>

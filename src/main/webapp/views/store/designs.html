@@ -6,30 +6,8 @@
         <!-- /.col-lg-12 -->
     </div>﻿
 
-
     <div class="container-fluid">
         <div class="row-fluid">
-
-            <!-- buttons -->
-            <div class="span4">
-                <button 
-                    class="btn btn-block btn-success" 
-                    ng-click="cart.addItem(product.proId, product.proNombre, product.proValor, 1)">
-                    <i class="icon-shopping-cart icon-white" /> add to cart
-                </button>
-                <button 
-                    class="btn btn-block btn-danger"  
-                    ng-click="cart.addItem(product.proId, product.proNombre, product.proValor, -1)"
-                    ng-disabled="cart.getTotalCount(product.proId) < 1">
-                    <i class="icon-trash icon-white" /> remove from cart
-                </button>
-                <button 
-                    class="btn btn-block" 
-                    onclick="window.location.href = 'index.html#/dashboard/products'">
-                    <i class="icon-chevron-left" /> back to store
-                </button>
-
-            </div>
 
             <div class="span8">
 
@@ -47,7 +25,7 @@
 
                     <tr>
                         <td class="tdRight"><b>Size</b></td>
-                        <td><select class="form-control">
+                        <td><select ng-model="producto.size"  class="form-control">
                                 <option>S</option>
                                 <option>M</option>
                                 <option>L</option>
@@ -55,11 +33,11 @@
                     </tr>
                     <tr>
                         <td class="tdRight"><b>Text</b></td>
-                        <td><input class="form-control" placeholder="Enter text"></td>
+                        <td><input ng-model="producto.text" class="form-control" placeholder="Enter text"></td>
                     </tr>
                     <tr>
                         <td class="tdRight"><b>Color</b></td>
-                        <td> <input name="color" type="color" /></td>
+                        <td> <input ng-model="producto.color" name="color" type="color" /></td>
                     </tr>
                     <tr>
                         <td colspan="3">
@@ -70,7 +48,70 @@
                     </tr>
                     <tr>
                         <td colspan="3">
+                            <!-- Catalog -->
+                            <div class="panel-body">
+                                <div>
+                                    <div class="row">
+                                        <p>
+                                            Search: <input ng-model="search">
+                                        </p>
+                                        <!-- Button trigger modal -->
+                                        <div  class=" panel panel-default col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="design in desings| orderBy:'disNombre'  | filter:search">
+                                            <p class="panel-body" data-toggle="modal" data-target="#myModal{{design.disUrl}}">
+                                                <img ng-src="data/{{design.disUrl}}.jpg" width='100' height='100' alt="{{design.disNombre}}"/>
+                                            </p>
+                                            <!-- Modal -->
+                                        </div>
+                                        <!-- /.modal -->
+                                    </div>
+                                </div>
 
+                                <div  ng-repeat="design in desings">
+                                    <div class="modal fade" id="myModal{{design.disUrl}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                    <h4 class="modal-title" id="myModalLabel">{{design.disNombre}}</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <table class="table table-bordered">
+                                                        <tr>
+                                                            <td colspan="2">
+                                                                <p class="text-center">
+                                                                    <img ng-src="data/{{design.disUrl}}.jpg" width='200' height='200' alt="{{design.disNombre}}"/>
+                                                                </p> 
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="tdRight"><b>Price</b></td>
+                                                            <td> {{design.disValor| currency}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="tdRight"><b>Author</b></td>
+                                                            <td> {{design.usuId.perId.perPrimerNombre}} {{design.usuId.perId.perPrimerApelido}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="tdRight"><b>Position</b></td>
+                                                            <td><select class="form-control">
+                                                                    <option>Adelante</option>
+                                                                    <option>Atras</option>
+                                                                </select> 
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="cart.listarProductos()">Close</button>
+                                                    <button type="button" class="btn btn-primary" ng-click="cart.addDesign(design.disId, design.disNombre, design.disValor, 1)" data-dismiss="modal">Add</button>
+                                                </div>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                     <tr class="well">
@@ -86,30 +127,26 @@
                 </table>
             </div>
 
+            <!-- buttons -->
             <div class="span4">
-                <p>
-                    Search: <input ng-model="search">
-                </p>
-                <div droppable class="box">
-                    <h2>Designs</h2>
-
-                    <div ng-repeat="design in desings| orderBy:'disNombre' | filter:search" draggable id="{{design.disId}}" class="item green">
-                        <p class="text-center">
-                            {{design.disValor| currency}}
-                            <img ng-src="data/{{design.disUrl}}.jpg" width='50' height='50' alt="{{design.disNombre}}"/>
-                        </p> 
-                    </div>
-                </div>
-
-                <div droppable class="box">
-                    <h2>Designs Use</h2>
-                    <div ng-repeat="item in dropped" class="item" id="{{item}}">
-                    </div>
-                </div>
+                <button 
+                    class="btn btn-block btn-success" 
+                    ng-click="cart.addProduct(product.proId, product.proNombre, product.proValor, 1)">
+                    <i class="icon-shopping-cart icon-white" /> add to cart
+                </button>
+                <button 
+                    class="btn btn-block btn-danger"  
+                    ng-click="cart.removeItem(product.proId, product.proNombre, product.proValor, -1)"
+                    ng-disabled="cart.getTotalCount(product.proId) < 1">
+                    <i class="icon-trash icon-white" /> remove from cart
+                </button>
+                <button 
+                    class="btn btn-block" 
+                    onclick="window.location.href = 'index.html#/dashboard/products'">
+                    <i class="icon-chevron-left" /> back to store
+                </button>
 
             </div>
-
-       
 
         </div>
     </div>
