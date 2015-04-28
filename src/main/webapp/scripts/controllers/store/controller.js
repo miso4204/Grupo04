@@ -71,9 +71,10 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 console.log('VALOR: ' + compra.comValor);
                 ComprasFactory.create(compra);
                 $location.path('dashboard/summary');
+                $scope.cart.clearItems();
             }, 1000);
 
-            $scope.cart.clearItems();
+
 
 
         };
@@ -100,11 +101,11 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             console.log('VALOR: ' + compra.comValor);
             ComprasFactory.create(compra);
             $location.path('dashboard/summary');
-
+   $scope.cart.clearItems();
         };
-        
-         $scope.cart.clearItems();
-         
+
+     
+
     }]);
 
 app.factory("DataService", function () {
