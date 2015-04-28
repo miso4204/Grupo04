@@ -6,7 +6,7 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
   
         $scope.usuariosLista=profilesFactory.query();
         $scope.dSerializa=JSON.parse($cookies.id);
-        
+       
         $scope.cargarDatos=function () {
            
            $scope.userXperfil= new profilesFactory();
@@ -41,17 +41,20 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
     }
     
   }, 2000);
-           
-           $timeout(function() {
-               console.log($cookies.admin);
-               if($cookies.admin==1)
-               {
-           $location.path('dashboard/administrador');
-       }else{
-           window.alert('inicie su sesion con su usuario y contrasena');
-           $location.path('login');
-       }
-             }, 3000);
+     
+     $timeout(function() {
+    
+    $scope.usuariosLista=profilesFactory.query();
+  }, 2500);
+    
+             $timeout(function() {
+    
+    $scope.reset();
+ 
+  }, 3000);
+     
+     
+     
         };
             
         $scope.reset= function (){
@@ -83,12 +86,10 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
         $timeout(function() {   
            
            userFactory.update({id:$rootScope.editarUsuario.usuId.usuId},$rootScope.editarUsuario.usuId);
-        
+        $scope.usuariosLista=profilesFactory.query();
         }, 2000);    
           
-          $timeout(function() {
-           $location.path('dashboard/administrador');
-             }, 3000);
+        
          
         }; 
        
@@ -96,7 +97,7 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
          $rootScope.editarUsuario=usuario;
           
          
-           $location.path('dashboard/adminEditar');
+          
  
        };
        
@@ -135,13 +136,11 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
          
         $timeout(function() {   
            
-           userFactory.update({id:$scope.dSerializa.usuId},$scope.dSerializa.usuId);
+           userFactory.update({id:$scope.dSerializa.usuId},$scope.dSerializa);
         
         }, 2000);    
           
-          $timeout(function() {
-           $location.path('dashboard/administrador');
-             }, 3000);
+         
          
            
        };

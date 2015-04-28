@@ -9,8 +9,8 @@
 
 var app = angular.module("sbAdminApp");
 
-app.controller('loginController', ['$scope', 'auth', 'UsersxperfilFactory',
-    function ($scope, auth, UsersxperfilFactory) {
+app.controller('loginController', ['$scope', 'auth', 'UsersxperfilFactory','$timeout','profilesFactory','usersFactory','peopleFactory','$location',
+    function ($scope, auth, UsersxperfilFactory,$timeout,profilesFactory,usersFactory,peopleFactory,$location) {
         //la función login que llamamos en la vista llama a la función
         //login de la factoria auth pasando lo que contiene el campo
         //de texto del formulario
@@ -21,6 +21,60 @@ app.controller('loginController', ['$scope', 'auth', 'UsersxperfilFactory',
             auth.login($scope.username, $scope.password,$scope.usersperfils);
 
         }
+        
+       $scope.cargarDatos=function () {
+           
+           $scope.userXperfil= new profilesFactory();
+           
+              $scope.person.perId=Math.round(Math.random()*10000);
+              $scope.usuario.usuId=Math.round(Math.random()*10000);
+              $scope.userXperfil.usuperId=Math.round(Math.random()*10000);
+              $scope.usuario.perId=$scope.person;
+              $scope.userXperfil.usuId=$scope.usuario; 
+             if($scope.perfil==2)
+            {
+                $scope.userXperfil.perId={'perId':2,'perNombre':'cliente'};
+            }
+            else
+            {
+                if($scope.perfil==3)
+                {
+                    $scope.userXperfil.perId={'perId':3,'perNombre':'artista'};
+                }
+            }
+          peopleFactory.create($scope.person);  
+         
+             $timeout(function() {
+    if ($scope.person) {
+     usersFactory.create($scope.usuario);
+    } 
+  }, 1000);
+
+  $timeout(function() {
+    if ($scope.usuario) {
+     profilesFactory.create($scope.userXperfil);
+    }
+    
+  }, 2000);
+    $timeout(function() {
+    
+    $scope.reset();
+ 
+  }, 2500);       
+           
+        };
+ 
+   $scope.reset= function (){
+          
+            $scope.person={};
+              $scope.usuario={};
+            
+        };  
+        
+        $scope.refresh=function(){
+          
+        };
+        
     }]);
 
 
@@ -43,6 +97,7 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
              $cookies.password = null;
              
             var key = '';
+            
             for (key in usersperfils)
             {
                 if (key != '$promise' && key != '$resolved') {
@@ -50,8 +105,7 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
                         $cookies.username = username,
                      $cookies.password = password;
                       $cookieStore.put("id",usersperfils[key]['usuId']);
-                       $cookieStore.put("admin",usersperfils[key]['perId']['perId']);
-                       console.log($cookies.admin);
+                       
                         break;
                     }
                 }
@@ -59,9 +113,11 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
       
       if($cookies.username == username){
           $location.path("dashboard/myPerfil");
+      
       }else{
-          $location.path("/loginBad");
-        }
+          
+          $location.path("/loginBad");}
+        
 
         },
         logout: function ()
@@ -82,11 +138,13 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
             {
                 $location.path("/login");
             }
+           
             //en el caso de que intente acceder al login y ya haya iniciado sesión lo mandamos a la home
 //            if(this.in_array("/login",rutasPrivadas) && typeof($cookies.username) != "undefined")
 //            {
 //                $location.path("/home");
 //            }
+
         },
         in_array: function (needle, haystack)
         {
@@ -102,6 +160,3 @@ app.factory('auth', function ($cookies, $cookieStore, $location)
         }
     }
 });
-
-
-
