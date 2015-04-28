@@ -27,6 +27,7 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("compra")
 public class CompraFacadeREST extends AbstractFacade<Compra> {
+
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -81,16 +82,20 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-    
+
     @GET
     @Path("nextId")
     @Produces("text/plain")
     public int siguienteId() {
-        
-        TypedQuery<Integer> query =
-            getEntityManager().createNamedQuery("Compra.findNextId", Integer.class);
-        int id =query.getSingleResult();
-        
+
+        TypedQuery<Integer> query
+                = getEntityManager().createNamedQuery("Compra.findNextId", Integer.class);
+        int id = 1;
+
+        if (query.getSingleResult() != null) {
+            id = query.getSingleResult();
+        }
+
         return id;
     }
 
@@ -98,6 +103,5 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
-    
+
 }
