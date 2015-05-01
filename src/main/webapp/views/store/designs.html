@@ -53,14 +53,39 @@
                                 <div>
                                     <div class="row">
                                         <p>
+                                            <strong class="primary-font"> List </strong> <input type="checkbox" ng-model="checked" aria-label="Toggle ngShow"><br/>
                                             Search: <input ng-model="search">
                                         </p>
                                         <!-- Button trigger modal -->
-                                        <div  class=" panel panel-default col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="design in desings| orderBy:'disNombre'  | filter:search">
-                                            <p class="panel-body" data-toggle="modal" data-target="#myModal{{design.disId}}">
-                                                <img ng-src="data/{{design.disUrl}}" width='100' height='100' alt="{{design.disNombre}}"/>
-                                            </p>
-                                            <!-- Modal -->
+                                        <div ng-hide="checked" class="panel panel-default">
+                                            <div  class=" panel panel-default col-lg-2 col-md-2 col-sm-3 col-xs-4" ng-repeat="design in desings| orderBy:'disNombre'  | filter:search">
+                                                <p class="panel-body" data-toggle="modal" data-target="#myModal{{design.disId}}">
+                                                    <img ng-src="data/{{design.disUrl}}" width='100' height='100' alt="{{design.disNombre}}"/>
+                                                </p>
+                                                <!-- Modal -->
+                                            </div>
+                                        </div>
+
+                                        <div class="panel panel-default" ng-show="checked">
+
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr ng-repeat="design in desings| orderBy:'disNombre' | filter:search">
+                                                        <td class="tdCenter">
+                                                            <img ng-src="data/{{design.disUrl}}" width='100' height='100' alt="{{design.disNombre}}" />
+                                                        </td>
+                                                        <td class="tdCenter">
+                                                            <a class="panel-body" data-toggle="modal" data-target="#myModal{{design.disId}}">
+                                                               {{design.disNombre}} 
+                                                            </a>
+                                                        </td>
+                                                        <td class="tdCenter">
+                                                            {{ design.disValor| currency}}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                         </div>
                                         <!-- /.modal -->
                                     </div>
