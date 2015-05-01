@@ -8,7 +8,6 @@ package com.thinktanksoft.stampurestyle;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -21,8 +20,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -70,13 +67,6 @@ public class Compra implements Serializable {
     @Size(min = 1, max = 30)
     @Column(name = "com_direccion")
     private String comDireccion;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "com_fecha")
-    @Temporal(TemporalType.DATE)
-    private Date comfecha;
-    
     @JoinColumn(name = "usu_id", referencedColumnName = "usu_id")
     @ManyToOne(optional = false)
     private Usuario usuId;
@@ -145,16 +135,6 @@ public class Compra implements Serializable {
     public void setComDireccion(String comDireccion) {
         this.comDireccion = comDireccion;
     }
-
-    public Date getComfecha() {
-        return comfecha;
-    }
-
-    public void setComfecha(Date comfecha) {
-        this.comfecha = comfecha;
-    }
-    
-    
 
     public Usuario getUsuId() {
         return usuId;
