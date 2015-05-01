@@ -111,4 +111,9 @@ background-color: #eee;
     overflow:hidden;
 }
 
+.share-button{
+    float: right;
+    max-width: 200px;
+}
+
 //Fin admin diseños

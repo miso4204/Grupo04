@@ -402,8 +402,18 @@ angular
                         })
                         .state('dashboard.summary', {
                             templateUrl: 'views/pagos/summary.html',
-                            url: '/summary'
-                            
+                            url: '/summary',
+                            controller: 'ShareCtrl',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/shareController.js'
+                                        ]
+                                    });
+                                }
+                            }
                         })
                 // fin de states para pagos pse @author alejandroquintero
 //-------------------------------------------------------------------------------------------------------                          
