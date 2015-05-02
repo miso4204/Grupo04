@@ -39,14 +39,20 @@ public class PersonaFacadeREST extends AbstractFacade<Persona> {
     public void create(Persona entity) {
         super.create(entity);
     }
-
+  
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Persona entity) {
         super.edit(entity);
     }
-
+    @PUT
+    @Path("/addressChange/{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void setNewAddress(@PathParam("id") Integer id, Persona entity) {
+         
+        super.edit(entity);
+    }
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
@@ -80,7 +86,7 @@ public class PersonaFacadeREST extends AbstractFacade<Persona> {
     public String countREST() {
         return String.valueOf(super.count());
     }
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
