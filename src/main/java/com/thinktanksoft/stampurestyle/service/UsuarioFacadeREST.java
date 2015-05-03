@@ -44,8 +44,19 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Usuario entity) {
+        
+        
         super.edit(entity);
     }
+    @PUT
+    @Path("/passwordChange/{id}")
+    @Consumes({"application/xml", "application/json"})
+    public void setNewPassword(@PathParam("id") Integer id, Usuario entity) {
+        
+        
+        super.edit(entity);
+    }
+      
 
     @DELETE
     @Path("{id}")
@@ -57,9 +68,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Usuario find(@PathParam("id") Integer id) {
+        
         return super.find(id);
     }
-
+     
     @GET
     @Override
     @Produces({"application/xml", "application/json"})

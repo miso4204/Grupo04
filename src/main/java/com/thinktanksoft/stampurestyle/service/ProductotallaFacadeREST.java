@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author yerson
  */
 @Stateless
-@Path("com.thinktanksoft.stampurestyle.productotalla")
+@Path("productotalla")
 public class ProductotallaFacadeREST extends AbstractFacade<Productotalla> {
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
     private EntityManager em;

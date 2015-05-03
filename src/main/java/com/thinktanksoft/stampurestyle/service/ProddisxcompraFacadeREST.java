@@ -24,7 +24,7 @@ import javax.ws.rs.Produces;
  * @author yerson
  */
 @Stateless
-@Path("com.thinktanksoft.stampurestyle.proddisxcompra")
+@Path("proddisxcompra")
 public class ProddisxcompraFacadeREST extends AbstractFacade<Proddisxcompra> {
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
     private EntityManager em;
@@ -35,14 +35,14 @@ public class ProddisxcompraFacadeREST extends AbstractFacade<Proddisxcompra> {
 
     @POST
     @Override
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void create(Proddisxcompra entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
+    @Consumes({"application/json"})
     public void edit(@PathParam("id") Integer id, Proddisxcompra entity) {
         super.edit(entity);
     }
@@ -55,21 +55,21 @@ public class ProddisxcompraFacadeREST extends AbstractFacade<Proddisxcompra> {
 
     @GET
     @Path("{id}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public Proddisxcompra find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Proddisxcompra> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Proddisxcompra> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
