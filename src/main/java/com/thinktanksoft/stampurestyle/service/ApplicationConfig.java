@@ -5,6 +5,7 @@
  */
 package com.thinktanksoft.stampurestyle.service;
 
+import com.thinktanksoft.stampurestyle.component.FacebookService;
 import com.thinktanksoft.stampurestyle.component.TwitterService;
 import java.io.FileInputStream;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
-        CompartirFacadeREST.shareController.setService(new TwitterService());
+        CompartirFacadeREST.shareController.setService(new FacebookService());
         return resources;
     }
 

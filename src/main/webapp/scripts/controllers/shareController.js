@@ -8,17 +8,20 @@
 angular.module('sbAdminApp').controller('ShareCtrl', ['$sce','$scope','ShareFactory','$cookies','CompraSummaryFactory','$rootScope',
     function ($sce, $scope, ShareFactory, $cookies, CompraSummaryFactory,$rootScope) {
         $scope.disabled=true;
-        $rootScope.compraId = 3;
-        $scope.compra = CompraSummaryFactory.get({id:1});
+        $scope.compra = CompraSummaryFactory.get({id:$rootScope.compraId});
         $scope.texto = ShareFactory.get({id:$scope.compraId});
         $scope.getInfo = function () {
             $scope.sharePost = $sce.trustAsHtml($scope.texto.text);
         };
+        $scope.shareAction = function(){
+            ShareFactory.update({id:$rootScope.compraId})
+        }
     }]);
 
 angular.module('sbAdminApp').factory('ShareFactory', function ($resource) {
-    return $resource('/StampUreStyle2.0/webresources/comparte/social/:id', {}, {
-        get: {method: 'GET', params: {id: '@id'}, isArray: false}
+    return $resource('/StampUreStyle2.0/webresources/comparte/:id', {}, {
+        get: {method: 'GET', params: {id: '@id'}, isArray: false},
+        update: {method: 'PUT', params: {id: '@id'}}
     });
 });
 

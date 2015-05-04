@@ -12,9 +12,8 @@ package com.thinktanksoft.stampurestyle.component;
 public class FacebookService implements ShareService{
 
     @Override
-    public boolean share(long id) {
-        System.out.println("Comparti en fb");
-        return true;
+    public String share(long id) {
+        return "Compartido en Facebook";
     }
 
     @Override

@@ -10,6 +10,6 @@ package com.thinktanksoft.stampurestyle.component;
  * @author CesarAugusto
  */
 public interface ShareService {
-     boolean share(long id);
+     String share(long id);
      String get(long id);
 }

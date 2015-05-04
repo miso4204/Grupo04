@@ -13,9 +13,8 @@ public class TwitterService implements ShareService{
 
     
     @Override
-    public boolean share(long id) {
-        System.out.println("Comparti en tw");
-        return true;
+    public String share(long id) {
+        return "Compartido en Twitter";
     }
 
     @Override

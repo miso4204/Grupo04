@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos',
+    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos','$rootScope',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos) {
+            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos,$rootScope) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -94,6 +94,7 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.usuId = $scope.usuarioLogin;
                 compra.comId = idCompra;
                 ComprasFactory.create(compra);
+                $rootScope.compraId = idCompra;
                 var arreglDisenosPorProductodis = [];
                 var arreglProductoDisPorCompra = [];
                 var productoDisenado = $scope.cart.guardarProductoDisenado();
@@ -159,6 +160,7 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comId = idCompra;
             console.log('VALOR: ' + compra.comValor);
             ComprasFactory.create(compra);
+            $rootScope.compraId = idCompra;
             $location.path('dashboard/summary');
             $scope.cart.clearItems();
         };

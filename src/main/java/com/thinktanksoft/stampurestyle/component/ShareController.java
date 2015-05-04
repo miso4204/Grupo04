@@ -17,7 +17,7 @@ public class ShareController {
         shareService = service;        
     }
     
-    public boolean share(long id){
+    public String share(long id){
         return shareService.share(id);
     }
     
