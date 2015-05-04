@@ -211,7 +211,36 @@ angular
                                     });
                                 }
                             }
-                        })                        
+                        }).state('dashboard.oferta-list', {
+                            templateUrl: 'views/oferta/oferta-list.html',
+                            url: '/oferta-list',
+                            controller: 'OfertaCtrl',
+                              resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/ofertaController.js'
+                                        ]
+                                    });
+                                }
+                            }
+                        })
+                          .state('dashboard.oferta-create', {
+                            templateUrl: 'views/oferta/oferta-create.html',
+                            url: '/oferta-create',
+                            controller: 'OfertaCtrl',
+                              resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/ofertaController.js'
+                                        ]
+                                    });
+                                }
+                            }
+                        })                             
                         .state('dashboard.reporte-ventas', {
                             templateUrl: 'views/reporte-ventas.html',
                             url: '/reporte-ventas',
