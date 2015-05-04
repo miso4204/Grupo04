@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra', 'CompraFactory', 'TarjetasFactoryCompra', 'ComprasFactory', '$location', 'bancos',
+    'TarjetaFactoryCompra', 'CompraFactory', 'TarjetasFactoryCompra', 'ComprasFactory', '$location', 'bancos','$rootScope',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra, CompraFactory, TarjetasFactoryCompra, ComprasFactory, $location, bancos) {
+            TarjetaFactoryCompra, CompraFactory, TarjetasFactoryCompra, ComprasFactory, $location, bancos,$rootScope) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -70,7 +70,8 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.comId = idCompra;
                 console.log('VALOR: ' + compra.comValor);
                 ComprasFactory.create(compra);
-                $location.path('dashboard/summary');
+                $rootScope.compraId = idCompra;
+                $location.path('dashboard/summary');                
                 $scope.cart.clearItems();
             }, 1000);
 
@@ -100,8 +101,9 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comId = idCompra;
             console.log('VALOR: ' + compra.comValor);
             ComprasFactory.create(compra);
+            $rootScope.compraId = idCompra;
             $location.path('dashboard/summary');
-   $scope.cart.clearItems();
+            $scope.cart.clearItems();
         };
 
      
