@@ -39,7 +39,9 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     @Override
     @Consumes({"application/json"})
     public void create(Compra entity) {
+        System.out.println(entity.getComId());
         super.create(entity);
+        System.out.println(entity.getComId());
     }
 
     @PUT
@@ -103,5 +105,5 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
 }

@@ -20,6 +20,11 @@ public class TwitterService implements ShareService{
 
     @Override
     public String get(long id) {
-        return "<div>Twitter</div>";
+        return "<div class=\"panel panel-default\">\n" +
+                "  <div class=\"panel-body\"><img src=\"img/utils/twitter_icon.jpg\" alt=\"Twitter Icon\" class=\"col-lg-3\" style=\"padding:0\"></div>\n" +
+                "  <div class=\"panel-body\">\n" +
+                "  <a href='#'>#YoEstampeMiEstilo</a>, te invito a visitar <a href='#'>@StampUreStyle</a> y poner tu firma en lo que usas.\n" +
+                "  </div>\n" +
+                "</div>";
     }
 }

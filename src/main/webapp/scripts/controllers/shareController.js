@@ -5,18 +5,25 @@
  */
 
 
-angular.module('sbAdminApp').controller('ShareCtrl', ['$scope','ShareFactory','$cookies',
-    function ($scope, ShareFactory, $cookies) {
+angular.module('sbAdminApp').controller('ShareCtrl', ['$sce','$scope','ShareFactory','$cookies','CompraSummaryFactory','$rootScope',
+    function ($sce, $scope, ShareFactory, $cookies, CompraSummaryFactory,$rootScope) {
         $scope.disabled=true;
-        $scope.compraId=1;
-        $scope.modal="Aca va lo que va a cargar";
-        $scope.getInfo = function (id) {
-           $scope.modal = ShareFactory.get({id: id});
+        $rootScope.compraId = 3;
+        $scope.compra = CompraSummaryFactory.get({id:1});
+        $scope.texto = ShareFactory.get({id:$scope.compraId});
+        $scope.getInfo = function () {
+            $scope.sharePost = $sce.trustAsHtml($scope.texto.text);
         };
     }]);
 
 angular.module('sbAdminApp').factory('ShareFactory', function ($resource) {
     return $resource('/StampUreStyle2.0/webresources/comparte/social/:id', {}, {
-        get: {method: 'GET', params: {id: '@id'}}
+        get: {method: 'GET', params: {id: '@id'}, isArray: false}
+    });
+});
+
+angular.module('sbAdminApp').factory('CompraSummaryFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/compra/:id', {}, {
+        get: {method: 'GET', params: {id: '@id'}},        
     });
 });

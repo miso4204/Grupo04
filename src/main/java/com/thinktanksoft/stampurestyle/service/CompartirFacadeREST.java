@@ -5,6 +5,7 @@
  */
 package com.thinktanksoft.stampurestyle.service;
 
+import com.thinktanksoft.stampurestyle.ResponseComponent;
 import com.thinktanksoft.stampurestyle.component.ShareController;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
@@ -26,13 +27,13 @@ public class CompartirFacadeREST {
     
     @GET
     @Path("social/{id}")
-    @Produces("application/json")
-    public String get(@PathParam("id") long id) {
-       return shareController.getInfo(id);
+    @Produces({"application/json"})
+    public ResponseComponent get(@PathParam("id") long id) { 
+       return new ResponseComponent(shareController.getInfo(id), 0);
     }
     @GET
     @Path("{id}")
-    @Produces("text/plain")
+    @Produces({"text/plain"})
     public boolean share(@PathParam("id")Long id) {
        return shareController.share(id);
     }

@@ -1,13 +1,13 @@
-<div>
-    <img src="img/banco.png" alt="" height="70" width="150"/>
+<hr>
+<div class="alert alert-success col-lg-12" role="alert">
+  <a href="#" class="alert-link">¡Felicitaciones! Transacción Exitosa</a>
 </div>
-<hr> <a ui-sref="dashboard.home"><i>logout</i></a>
 
 <div class="row">
-    <div class="col-lg-6">
+    <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-               Resumen transaccion
+               Resumen de la Transacción
             </div>
             <!-- /.panel-heading -->
             <div class="panel-body">
@@ -15,18 +15,22 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>#comprobante</th>
-                                <th>cuenta</th>
-                                <th>debito</th>
-                                <th>saldo</th>
+                                <th>Usuario</th>
+                                <th>Pais</th>
+                                <th>Ciudad</th>
+                                <th>Dirección</th>
+                                <th>Tipo de Pago</th>
+                                <th>Total</th>
                             </tr>                            
                         </thead>
                         <tbody>
                             <tr>
-                                <td>00-9089890-9</td>
-                                <td>155784245627</td>
-                                <td>50.000</td>
-                                <td>4,519,099</td>
+                                <td>{{compra.usuId.usuUsuario}}</td>                                
+                                <td>{{compra.comPais}}</td>
+                                <td>{{compra.comCiudad}}</td>
+                                <td>{{compra.comDireccion}}</td>
+                                <td>{{compra.tipPagId.tipPagNombre}}</td>
+                                <td>{{compra.comValor}}</td>
                             </tr>                           
                         </tbody>
                     </table>
@@ -38,7 +42,7 @@
         </div>
         <!-- /.panel -->
         <div class="col-lg-12" id="panel-share"> 
-            <input class="share-button" type="image" src="img/utils/share-twitter.jpg" alt="Submit" data-toggle="modal" data-target="#modalShare" ng-click="getInfo(compraId)">
+            <input class="share-button" type="image" src="img/utils/share-twitter.jpg" alt="Submit" data-toggle="modal" data-target="#modalShare" ng-click="getInfo()">
              <div class="modal fade" id="modalShare" tabindex="-1" role="dialog" aria-labelledby="modalShare" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -47,7 +51,7 @@
                                 <h4 class="modal-title" id="modalCreditCart">Share with your friends</h4>
                         </div>
                         <div class="modal-body">
-                             {{modal}}
+                            <div ng-bind-html="sharePost"></div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
