@@ -142,14 +142,13 @@ shoppingCart.prototype.getTotalPrice = function (id) {
         var item = this.items[i];
         if (id == null || item.id == id) {
             total += this.toNumber(item.quantity * item.price);
-            console.log("Item cantidad" + item.quantity);
             if (item.designsPro === undefined) {
                 console.log("El producto no tiene diseños");
             } else {
                 for (var j = 0; j < item.designsPro.length; j++) {
                     var des = item.designsPro[j];
                     total += this.toNumber(item.quantity * des.price);
-                    console.log("tiene diseños y valen " + this.toNumber(item.quantity * des.price));
+                    // console.log("tiene diseños y valen " + this.toNumber(item.quantity * des.price));
                 }
             }
         }
@@ -432,6 +431,11 @@ shoppingCart.prototype.listarProductos = function () {
         console.log("Producto--->>>>>" + item.sku);
         console.log("Nombre--->>>>>" + item.name);
     }
+}
+
+
+shoppingCart.prototype.guardarProductoDisenado = function () {
+  return this.items;
 }
 
 shoppingCart.prototype.getPrice = function (id) {
