@@ -34,7 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Productodisenado.findAll", query = "SELECT p FROM Productodisenado p"),
     @NamedQuery(name = "Productodisenado.findByProDisId", query = "SELECT p FROM Productodisenado p WHERE p.proDisId = :proDisId"),
     @NamedQuery(name = "Productodisenado.findByProDisCantidad", query = "SELECT p FROM Productodisenado p WHERE p.proDisCantidad = :proDisCantidad"),
-    @NamedQuery(name = "Productodisenado.findByProDisValor", query = "SELECT p FROM Productodisenado p WHERE p.proDisValor = :proDisValor")})
+    @NamedQuery(name = "Productodisenado.findByProDisValor", query = "SELECT p FROM Productodisenado p WHERE p.proDisValor = :proDisValor"),
+    @NamedQuery(name = "Productodisenado.findNextId", query = "SELECT max(p.proDisId)+1 FROM Productodisenado p")})
 public class Productodisenado implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -56,7 +57,7 @@ public class Productodisenado implements Serializable {
     @JoinColumn(name = "pro_id", referencedColumnName = "pro_id")
     @ManyToOne(optional = false)
     private Producto proId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "proDisId")
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "proDisId")
     private Collection<Disenosxproddis> disenosxproddisCollection;
 
     public Productodisenado() {
