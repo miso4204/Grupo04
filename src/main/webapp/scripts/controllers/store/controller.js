@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 // the storeController contains two objects:
 // - store: contains the product list
@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra', 'CompraFactory', 'TarjetasFactoryCompra', 'ComprasFactory', '$location', 'bancos','$rootScope',
+    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra, CompraFactory, TarjetasFactoryCompra, ComprasFactory, $location, bancos,$rootScope) {
+            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -21,6 +21,10 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
         $scope.tipos = ["VISA", "American Express", "Master Card"];
         $scope.siguienteId = CompraFactory.nextId();
         $scope.tarjetasiguienteId = TarjetaFactoryCompra.nextId();
+        $scope.productoDisenadoId = ProductoDisenadoFactory.nextId();
+        $scope.disenosPorProductoId = DisenosPorProductoDisenadoFactory.nextId();
+        $scope.productoDisPorCompraId = ProductosDisenadosPorCompraFactory.nextId();
+
 
         $scope.pagoPSE = {direccion: null};
         $scope.pseBanco = bancos.bancos;
@@ -29,6 +33,9 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
         $scope.createAction = function () {
             var idTarjeta = '';
             var idCompra = '';
+            var idProductoDisenado = '';
+            var idDisenodPorProdDis = '';
+            var idProductoDisPorCompra = '';
             var key = '';
             for (key in $scope.tarjetasiguienteId)
             {
@@ -42,13 +49,31 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                     break;
                 idCompra = idCompra + $scope.siguienteId[key];
             }
+            for (key in $scope.productoDisenadoId)
+            {
+                if (key === '$promise')
+                    break;
+                idProductoDisenado = idProductoDisenado + $scope.productoDisenadoId[key];
+            }
+            for (key in $scope.disenosPorProductoId)
+            {
+                if (key === '$promise')
+                    break;
+                idDisenodPorProdDis = idDisenodPorProdDis + $scope.disenosPorProductoId[key];
+            }
+            for (key in $scope.productoDisPorCompraId)
+            {
+                if (key === '$promise')
+                    break;
+                idProductoDisPorCompra = idProductoDisPorCompra + $scope.productoDisPorCompraId[key];
+            }
+
 
             var tarjeta = {persona: null, tarNumero: null, tarFechaExpiracion: null, tarCodigoSeguridad: null, tarTipo: null,
                 tarjetacreditoPK: null};
             var validaHasta = $scope.pagoTarjeta.validaHasta;
             var validaHastaArray = validaHasta.split("/");
             var validadhastaFecha = new Date("20" + validaHastaArray[1] + "-" + validaHastaArray[0] + "-01");
-            console.log("asd" + validadhastaFecha);
             tarjeta.tarTipo = $scope.pagoTarjeta.tipo;
             tarjeta.tarNumero = $scope.pagoTarjeta.numTarjeta;
             tarjeta.tarFechaExpiracion = validadhastaFecha;
@@ -68,16 +93,49 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.tarjetacredito = tarjeta;
                 compra.usuId = $scope.usuarioLogin;
                 compra.comId = idCompra;
-                console.log('VALOR: ' + compra.comValor);
                 ComprasFactory.create(compra);
-                $rootScope.compraId = idCompra;
-                $location.path('dashboard/summary');                
+                var arreglDisenosPorProductodis = [];
+                var arreglProductoDisPorCompra = [];
+                var productoDisenado = $scope.cart.guardarProductoDisenado();
+                // item data
+                for (var i = 0; i < productoDisenado.length; i++) {
+                    var item = productoDisenado[i];
+                    var price = $scope.cart.getPrice(item.id);
+                    var productodisenado = {"proDisCantidad": item.quantity, "proDisId": idProductoDisenado, "proDisValor": price, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": item.sku, "proNombre": null, "proUrl": null, "proValor": 0}};
+                    var productoDisPorCompra = {"comId": {"comCiudad": null, "comDireccion": null, "comId": idCompra, "comPais": null, "comValor": 0, "tarjetacredito": {"persona": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "tarCodigoSeguridad": 0, "tarFechaExpiracion": null, "tarNumero": null, "tarTipo": null, "tarjetacreditoPK": {"perId": 0, "tarId": 0}}, "tipPagId": {"tipPagId": 0, "tipPagNombre": null}, "usuId": {"perId": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "usuContrasena": null, "usuId": 0, "usuUsuario": null}}, "proDisId": {"proDisCantidad": 0, "proDisId": idProductoDisenado, "proDisValor": 0, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": 0, "proNombre": null, "proUrl": null, "proValor": 0}}, "prodisComId": idProductoDisPorCompra};
+                    arreglProductoDisPorCompra.push(productoDisPorCompra);
+                    //Se almacena el producto diseñado
+                    ProductoDisenadosFactory.create(productodisenado);
+                    if (item.designsPro === undefined) {
+                    } else {
+                        for (var j = 0; j < item.designsPro.length; j++) {
+                            var des = item.designsPro[j];
+                            var disenosPorProductodis = {"disId": {"catId": {"catId": 0, "catNombre": null}, "disId": des.sku, "disNombre": null, "disNumeroVentas": 0, "disUrl": null, "disValor": 0, "estId": {"estId": 0, "estNombre": null}, "usuId": {"perId": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "usuContrasena": null, "usuId": 0, "usuUsuario": null}}, "disProdisId": idDisenodPorProdDis, "disProdisPosicion": 1, "proDisId": {"proDisCantidad": 0, "proDisId": idProductoDisenado, "proDisValor": 0, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": 0, "proNombre": null, "proUrl": null, "proValor": 0}}};
+                            arreglDisenosPorProductodis.push(disenosPorProductodis);
+                            //DisenosPorProductoDisenadosFactory.create(disenosPorProductodis);
+                            idDisenodPorProdDis = parseInt(idDisenodPorProdDis) + parseInt(1);
+                        }
+                    }
+
+                    idProductoDisenado = parseInt(idProductoDisenado) + parseInt(1);
+                    idProductoDisPorCompra = parseInt(idProductoDisPorCompra) + parseInt(1);
+                }
+                $timeout(function () {
+                    for (var o = 0; o < arreglDisenosPorProductodis.length; o++) {
+                        var dpp = arreglDisenosPorProductodis[o];
+                        DisenosPorProductoDisenadosFactory.create(dpp);
+                    }
+                }, 1000);
+                $timeout(function () {
+                    for (var p = 0; p < arreglProductoDisPorCompra.length; p++) {
+                        var pdpc = arreglProductoDisPorCompra[p];
+                        ProductosDisenadosPorCompraFactorysFactory.create(pdpc);
+                    }
+                }, 1000);
                 $scope.cart.clearItems();
+
             }, 1000);
-
-
-
-
+            $location.path('dashboard/summary');
         };
         $scope.createbyPSE = function () {
 
@@ -101,12 +159,11 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comId = idCompra;
             console.log('VALOR: ' + compra.comValor);
             ComprasFactory.create(compra);
-            $rootScope.compraId = idCompra;
             $location.path('dashboard/summary');
             $scope.cart.clearItems();
         };
 
-     
+
 
     }]);
 
@@ -223,4 +280,71 @@ app.factory('bancos', function () {
 
 
     }
+});
+
+//Producto diseñado
+app.factory('ProductoDisenadosFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/productodisenado', {},
+            {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'}
+
+            });
+});
+
+app.factory('ProductoDisenadoFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/productodisenado/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
+});
+
+//Diseños por producto diseñado
+app.factory('DisenosPorProductoDisenadosFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/disenosxproddis', {},
+            {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'}
+
+            });
+});
+
+app.factory('DisenosPorProductoDisenadoFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/disenosxproddis/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
+});
+
+//ProDis por compra
+app.factory('ProductosDisenadosPorCompraFactorysFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/proddisxcompra', {},
+            {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'}
+
+            });
+});
+
+app.factory('ProductosDisenadosPorCompraFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/proddisxcompra/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
+});
+
+//Producto
+app.factory('ProductoFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/producto/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@proId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
 });
