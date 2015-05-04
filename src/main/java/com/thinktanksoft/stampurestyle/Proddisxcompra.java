@@ -27,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Proddisxcompra.findAll", query = "SELECT p FROM Proddisxcompra p"),
-    @NamedQuery(name = "Proddisxcompra.findByProdisComId", query = "SELECT p FROM Proddisxcompra p WHERE p.prodisComId = :prodisComId")})
+    @NamedQuery(name = "Proddisxcompra.findByProdisComId", query = "SELECT p FROM Proddisxcompra p WHERE p.prodisComId = :prodisComId"),
+    @NamedQuery(name = "Proddisxcompra.findNextId", query = "SELECT max(p.prodisComId)+1 FROM Proddisxcompra p")})
 public class Proddisxcompra implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
