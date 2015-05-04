@@ -28,7 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Disenosxproddis.findAll", query = "SELECT d FROM Disenosxproddis d"),
     @NamedQuery(name = "Disenosxproddis.findByDisProdisId", query = "SELECT d FROM Disenosxproddis d WHERE d.disProdisId = :disProdisId"),
-    @NamedQuery(name = "Disenosxproddis.findByDisProdisPosicion", query = "SELECT d FROM Disenosxproddis d WHERE d.disProdisPosicion = :disProdisPosicion")})
+    @NamedQuery(name = "Disenosxproddis.findByDisProdisPosicion", query = "SELECT d FROM Disenosxproddis d WHERE d.disProdisPosicion = :disProdisPosicion"),
+    @NamedQuery(name = "Disenosxproddis.findNextId", query = "SELECT max(d.disProdisId)+1 FROM Disenosxproddis d")})
 public class Disenosxproddis implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -1,8 +1,8 @@
 'use strict';
 
 
-angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$cookies','$timeout','profilesFactory','usersFactory','peopleFactory','userFactory','personFactory','perfilFactory','$location',
-    function ($scope,$rootScope,$cookies,$timeout,profilesFactory,usersFactory,peopleFactory,userFactory,personFactory,perfilFactory,$location) {
+angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$cookies','$timeout','profilesFactory','usersFactory','peopleFactory','userFactory','personFactory','perfilFactory','auth','$location',
+    function ($scope,$rootScope,$cookies,$timeout,profilesFactory,usersFactory,peopleFactory,userFactory,personFactory,perfilFactory,auth,$location) {
   
         $scope.usuariosLista=profilesFactory.query();
         $scope.dSerializa=JSON.parse($cookies.id);
@@ -16,6 +16,7 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
               $scope.userXperfil.usuperId=Math.round(Math.random()*10000);
               $scope.usuario.perId=$scope.person;
               $scope.userXperfil.usuId=$scope.usuario; 
+              
              if($scope.perfil==2)
             {
                 $scope.userXperfil.perId={'perId':2,'perNombre':'cliente'};
@@ -139,13 +140,25 @@ angular.module('sbAdminApp').controller('newAccount', ['$scope','$rootScope','$c
            userFactory.update({id:$scope.dSerializa.usuId},$scope.dSerializa);
         
         }, 2000);    
-          
-         
-         
-           
+             
        };
-       
-     
+    
+    $scope.ngLogout= function(){
+         
+        $timeout(function() {  
+        auth.logout();    
+          }, 1500); 
+               
+    };
+    $scope.updateAddress=function(){
+        $scope.dSerializa.perId.perDireccion=$scope.dire;
+         
+        $scope.editandoMyCuenta();
+         
+        
+        
+    }
+    
     }]);
 
 

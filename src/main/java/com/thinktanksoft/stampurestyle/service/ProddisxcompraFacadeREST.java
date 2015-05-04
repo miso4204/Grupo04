@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -79,6 +80,24 @@ public class ProddisxcompraFacadeREST extends AbstractFacade<Proddisxcompra> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+     @GET
+    @Path("nextId")
+    @Produces("text/plain")
+    public int siguienteId() {
+        int id =0;
+        
+        TypedQuery<Integer> query =
+            getEntityManager().createNamedQuery("Proddisxcompra.findNextId", Integer.class);
+        
+        
+         if (query.getSingleResult() != null) {
+            id = query.getSingleResult();
+        }
+
+        return id;
+        
     }
 
     @Override

@@ -37,7 +37,7 @@ angular
                                                 name: 'sbAdminApp',
                                                 files: [
                                                     'scripts/directives/header/header.js',
-                                                    'scripts/directives/header/header-notification/header-notification.js',
+                                                   'scripts/directives/header/header-notification/header-notification.js',
                                                     'scripts/directives/sidebar/sidebar.js',
                                                     'scripts/directives/sidebar/sidebar-search/sidebar-search.js'
                                                 ]
@@ -431,13 +431,23 @@ angular
                         })
                         .state('dashboard.summary', {
                             templateUrl: 'views/pagos/summary.html',
-                            url: '/summary'
-                            
+                            url: '/summary',
+                            controller: 'ShareCtrl',
+                            resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/shareController.js'
+                                        ]
+                                    });
+                                }
+                            }
                         })
                 // fin de states para pagos pse @author alejandroquintero
 //-------------------------------------------------------------------------------------------------------                          
                 //inicio states para crud de usuario @author alejandroquintero
-                       
+                    
                   
                         .state('dashboard.myPerfil', {
                             templateUrl: 'views/Usuarios/myPerfil.html',
@@ -448,8 +458,13 @@ angular
                                     return $ocLazyLoad.load({
                                         name: 'sbAdminApp',
                                         files: [
+                                            'scripts/factories/usuarios.js',
+                                            'scripts/factories/password.js',
+                                            'scripts/factories/direccion.js',
+                                            'scripts/controllers/login.js',
                                             'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
+                                            'scripts/controllers/updateProfile/passCtrl.js',
+                                            'scripts/controllers/updateProfile/direCtrl.js'
                                         ]
                                     })
                                 }
@@ -465,7 +480,8 @@ angular
                                         name: 'sbAdminApp',
                                         files: [
                                             'scripts/controllers/Usuarios/usuCtrl.js',
-                                            'scripts/factories/usuarios.js'
+                                            'scripts/factories/usuarios.js',
+                                            'scripts/controllers/login.js'
                                         ]
                                     })
                                 }
