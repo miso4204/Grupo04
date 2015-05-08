@@ -93,8 +93,8 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.tarjetacredito = tarjeta;
                 compra.usuId = $scope.usuarioLogin;
                 compra.comId = idCompra;
-                ComprasFactory.create(compra);
-                $rootScope.compraId = idCompra;
+                ComprasFactory.create(compra);     
+                $rootScope.compra = compra;
                 var arreglDisenosPorProductodis = [];
                 var arreglProductoDisPorCompra = [];
                 var productoDisenado = $scope.cart.guardarProductoDisenado();
@@ -158,14 +158,12 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comValor = $scope.cart.getTotalPrice();
             compra.usuId = $scope.usuarioLogin;
             compra.comId = idCompra;
-            console.log('VALOR: ' + compra.comValor);
+            console.log('VALOR: ' + compra.comValor);            
             ComprasFactory.create(compra);
-            $rootScope.compraId = idCompra;
+            $rootScope.compra = compra;
             $location.path('dashboard/summary');
             $scope.cart.clearItems();
         };
-
-
 
     }]);
 
