@@ -19,6 +19,7 @@ public class TwitterService implements ShareService{
 
     @Override
     public String get(long id) {
+        System.out.println("Twitter");
         return "<div class=\"panel panel-default\">\n" +
                 "  <div class=\"panel-body\"><img src=\"img/utils/twitter_icon.jpg\" alt=\"Twitter Icon\" class=\"col-lg-3\" style=\"padding:0\"></div>\n" +
                 "  <div class=\"panel-body\">\n" +

@@ -9,6 +9,7 @@ import com.thinktanksoft.stampurestyle.Compra;
 import com.thinktanksoft.stampurestyle.Diseno;
 import com.thinktanksoft.stampurestyle.ResponseComponent;
 import com.thinktanksoft.stampurestyle.component.ShareController;
+import java.util.Date;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -47,7 +48,7 @@ public class CompartirFacadeREST extends AbstractFacade<Compra> {
     @Path("{id}")
     public void share(@PathParam("id") Integer id) {
         Compra entity = super.find(id);
-        entity.setComObserv(shareController.share(id));
+        entity.setComObserv(shareController.share(id)+" "+new Date().toString());
         super.edit(entity);
     }
     

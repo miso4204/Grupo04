@@ -27,7 +27,7 @@ public class ApplicationConfig extends Application {
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
         addRestResourceClasses(resources);
-        CompartirFacadeREST.shareController.setService(new FacebookService());
+        CompartirFacadeREST.shareController.setService(new TwitterService());
         return resources;
     }
 

@@ -14,6 +14,7 @@ public class ShareController {
     private ShareService shareService;
     
     public void setService(ShareService service){
+        System.out.println("Add variability "+service);
         shareService = service;        
     }
     

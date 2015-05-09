@@ -18,6 +18,7 @@ public class FacebookService implements ShareService{
 
     @Override
     public String get(long id) {
+        System.out.println("facebook");
         return "<div class=\"panel panel-default\">\n" +
                 "  <div class=\"panel-heading\" style=\"background-color:#1E4EB2; height: 50px;\"><img src=\"img/utils/fblogo.png\" alt=\"Facebook Icon\" class=\"col-lg-2\" style=\"padding:0\"></div>\n" +
                 "  <div class=\"panel-body\">\n" +
