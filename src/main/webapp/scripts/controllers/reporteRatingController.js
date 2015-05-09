@@ -1,143 +1,83 @@
 'use strict';
-/**
+/**.perPrimerNombre
  * @ngdoc function
  * @name sbAdminApp.controller:MainCtrl
  * @description
  * # MainCtrl
  * Controller of the sbAdminApp
+ * 
  */
-angular.module('sbAdminApp')
-  .controller('ReporteRatingCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
-    $scope.selectusuarios = {usuarios:[{
-                id : 0,
-                nombre : "Israel Parra",
-                edad : "32 años",
-                estampas:[{url:'./data/Barista_T_Shirt_Design_by_pamster88.jpg',rating:10},
-                    {url:'./data/Rescues_Shirt_Design_Sehenuk.jpg',rating:4}]
-            },
-            {
-                id : 1,
-                nombre : "Andrés Cuenca",
-                edad : "24 años",
-                estampas:[{url:'./data/Barista_T_Shirt_Design_by_pamster88.jpg',rating:10},
-                    {url:'./data/Batch_2012_Shirt_Design_by_LimeX.png',rating:8}]
-            },
-            {
-                id : 2,
-                nombre : "Juan Caceres",
-                edad : "28 años",
-                estampas:[{url:'./data/Rescues_Shirt_Design_Sehenuk.jpg',rating:7},
-                    {url:'./data/estampa-otonal.jpg',rating:3}]
-            },
-            {
-                id : 3,
-                nombre : "Pepito Pérez",
-                edad : "18 años",
-                estampas:[{url:'./data/Barista_T_Shirt_Design_by_pamster88.jpg',rating:10},
-                    {url:'./data/estampa1.jpg',rating:2}]
-            },
-            {
-                id : 4,
-                nombre : "Manuel Diaz",
-                edad : "45 años",
-                estampas:[{url:'./data/Rescues_Shirt_Design_Sehenuk.jpg',rating:10},
-                    {url:'./data/estampa-otonal.jpg',rating:10}]
+
+var app = angular.module("sbAdminApp");
+
+app.controller('ReporteRatingCtrl', ['$scope', 'DisenosPorProductoDisenadosFactory', '$timeout', '$window',
+    function ($scope, DisenosPorProductoDisenadosFactory) {
+
+        $scope.disenosPorProDis = DisenosPorProductoDisenadosFactory.query();
+
+        $scope.disenosVendidos = function () {
+                $scope.disenosVen = [];
+                $scope.autores = [];
+            if ($scope.disenosVen.length === 0) {
+                var found = true;
+                var foundAutor = true;
+                for (var i = 0; i < $scope.disenosPorProDis.length; i++) {
+                    found = true;
+                    foundAutor = true;
+                    var dppd = $scope.disenosPorProDis[i];
+                    var id = dppd.disId.disId;
+                    var nombre = dppd.disId.disNombre;
+                    var cantidad = dppd.proDisId.proDisCantidad;
+                    var autor = dppd.disId.usuId.perId.perPrimerNombre + " " + dppd.disId.usuId.perId.perPrimerApelido;
+                    var idAutor = dppd.disId.usuId.perId.perId;
+                    var url = dppd.disId.disUrl;
+                    for (var j = 0; j < $scope.disenosVen.length; j++) {
+                        var dis = $scope.disenosVen[j];
+                        if (dis.id === id) {
+                            found = false;
+                            dis.cantidad = (dis.cantidad + cantidad);
+                        }
+                    }
+                    for (var k = 0; k < $scope.autores.length; k++) {
+                        var aut = $scope.autores[k];
+                        if (aut.idAutor === idAutor) {
+                            foundAutor = false;
+                        }
+                    }
+
+                    if (foundAutor) {
+                        var author = {"idAutor": idAutor, "autor": autor};
+                        $scope.autores.push(author);
+                    }
+
+                    if (found) {
+
+                        var diseno = {"id": id, "nombre": nombre, "cantidad": cantidad, "idAutor": idAutor, "autor": autor, "url": url};
+                        $scope.disenosVen.push(diseno);
+                    }
+                    // var diseno = new addDiseno(dppd.disId.disId);
+                }
             }
-            
-    ],
- filtrar : function(id){
-      console.log(id);
- }}
-   
-    ;
-    $scope.line = {
-	    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
-	    series: ['Israel Parra','Andrés Cuenca','Juan Caceres', 'Pepito Pérez', 'Manuel Diaz'],
-	    data: [
-                   [650, 590, 500, 840, 560],
-		   [280, 480, 450, 190, 160],
-                   [320, 230, 800, 810, 560],
-		   [280, 560, 400, 190, 830],
-                   [330, 440, 570, 870, 860]
-	    ],
-            toggle : function () 
-    	{/*
-    		this.series = this.series[1];*/
-		}
-    };
+        };
 
-    $scope.bar = {
-	    labels: ['Enero', 'Febrero', 'Marzo', 'Abril'],
-	    series: ['Israel Parra','Andrés Cuenca','Juan Caceres', 'Pepito Pérez', 'Manuel Diaz'],
-	    data: [
-                   [650, 590, 500, 840, 560],
-		   [280, 480, 450, 190, 160],
-                   [320, 230, 800, 810, 560],
-		   [280, 560, 400, 190, 830],
-                   [330, 440, 570, 870, 860]
-	    ]
-    	
-    };
+    }
+]);
 
-    $scope.donut = {
-    	labels: ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data: [300, 500, 100]
-    };
-
-    $scope.radar = {
-    	labels:["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
-
-    	data:[
-    	    [65, 59, 90, 81, 56, 55, 40],
-    	    [28, 48, 40, 19, 96, 27, 100]
-    	]
-    };
-
-    $scope.pie = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales"],
-    	data : [300, 500, 100]
-    };
-
-    $scope.polar = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120]
-    };
-
-    $scope.dynamic = {
-    	labels : ["Download Sales", "In-Store Sales", "Mail-Order Sales", "Tele Sales", "Corporate Sales"],
-    	data : [300, 500, 100, 40, 120],
-    	type : 'PolarArea',
-
-    	toggle : function () 
-    	{
-    		this.type = this.type === 'PolarArea' ?
-    	    'Pie' : 'PolarArea';
-		}
-    };
-    $scope.usuarios = [{
-                id : 0,
-                nombre : "Israel Parra",
-                edad : "32 años"
-            },
+//Diseños por producto diseñado
+app.factory('DisenosPorProductoDisenadosFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/disenosxproddis', {},
             {
-                id : 1,
-                nombre : "Andrés Cuenca",
-                edad : "24 años"
-            },
-            {
-                id : 2,
-                nombre : "Juan Carlos",
-                edad : "28 años"
-            },
-            {
-                id : 3,
-                nombre : "Pepito",
-                edad : "18 años"
-            },
-            {
-                id : 4,
-                nombre : "Manuel",
-                edad : "45 años"
-            }
-    ];
-}]);
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'}
+
+            });
+});
+
+app.factory('DisenosPorProductoDisenadoFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/disenosxproddis/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@disId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
+});
