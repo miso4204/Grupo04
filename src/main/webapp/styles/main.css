@@ -10,7 +10,22 @@ body {
   padding-left: 15px;
   padding-right: 15px;
 }
+.navbar-brand {
+    font-family: "Kaushan Script","Helvetica Neue",Helvetica,Arial,cursive;
+    color: #fed136 !important;
+    font-size: 2em;
+}
 
+.btn-stamp {
+  color: #fff;
+  background-color: #fed136;
+  border-color: #E5CA42;
+}
+
+.btn-stamp:hover {
+  color: #fff;
+  background-color: #FEBF36;
+}
 /* Custom page header */
 .header {
   border-bottom: 1px solid #e5e5e5;
@@ -109,6 +124,11 @@ background-color: #eee;
     height:70px;
     display:inline-block;
     overflow:hidden;
+}
+
+.share-button{
+    float: right;
+    max-width: 200px;
 }
 
 //Fin admin diseños

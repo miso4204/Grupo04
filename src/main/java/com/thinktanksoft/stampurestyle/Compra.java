@@ -80,7 +80,10 @@ public class Compra implements Serializable {
     private Tarjetacredito tarjetacredito;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "comId")
     private Collection<Proddisxcompra> proddisxcompraCollection;
-
+    @Basic(optional = true)
+    @Column(name = "com_observ")
+    private String comObserv;
+     
     public Compra() {
     }
 
@@ -168,6 +171,14 @@ public class Compra implements Serializable {
     public void setProddisxcompraCollection(Collection<Proddisxcompra> proddisxcompraCollection) {
         this.proddisxcompraCollection = proddisxcompraCollection;
     }
+
+    public String getComObserv() {
+        return comObserv;
+    }
+
+    public void setComObserv(String comObserv) {
+        this.comObserv = comObserv;
+    }   
 
     @Override
     public int hashCode() {

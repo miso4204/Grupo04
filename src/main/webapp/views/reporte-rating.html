@@ -1,47 +1,50 @@
-<div class="row">
+<div class="row" ng-controller="ReporteRatingCtrl">
     <div class="col-lg-12">
         <h1 class="page-header">Reporte de Rating</h1>
     </div>
     <!-- /.col-lg-12 -->
 </div>
 
-<div class="form-group">
-    <label>Filtrar por Usuarios</label>
-    <select ng-options="usu as usu.nombre for usu in selectusuarios.usuarios" ng-model="usu" class="form-control" >
-    </select>
-</div>
 <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-body" ng-repeat="usuariodis in selectusuarios.usuarios |filter:usu.nombre">
-                            <h3>{{usuariodis.nombre}}</h3>
-                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>
-                                                Estampa
-                                                
-                                            </th>
-                                            <th>
-                                                Rating
-                                                
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-repeat="estampa in usuariodis.estampas " font-size="80px">
-                                            <th> <img width="auto" height="100px" ng-src="{{ estampa.url }}"/></th>
-                                            <td class="text-primary col-md-4 col-md-offset-4" align="center"><h1>{{estampa.rating}}</h1></td>
-                                            
-                                        </tr>
-                                         
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+    <div class="col-lg-12" ng-init="checked = true">
+        <div class="panel panel-default" ng-model="disenosVendidos()">
+            <div class="panel-body">
+                <button type="button" class="btn btn-info" ng-click="list = disenosVen;
+                    listA = autores;
+                    checked = false" ng-hide="!checked">Generar Reporte</button>
+                <div ng-hide="checked">
+                    <div class="form-group">
+                        <label>Filtrar por Autores</label>
+                        <select ng-options="usu as usu.autor for usu in listA" ng-model="usu" class="form-control" >
+                        </select>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>  # </th>
+                                    <th>Desing</th>
+                                    <th>Name</th>
+                                    <th>Sales</th>
+                                    <th>Author</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="usuariodis in list| filter:usu.autor">
+                                    <td class="tdCenter"><h3>{{list.indexOf(usuariodis) + 1}}</h3> </td>
+                                    <td class="tdCenter"> <img width="auto" height="50px" ng-src="data/{{usuariodis.url}}"/></td>
+                                    <td><h3>{{usuariodis.nombre}}</h3> </td>
+                                    <td ><h3>{{usuariodis.cantidad}}</h3> </td>
+                                    <td ><h3>{{usuariodis.autor}}</h3> </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
-            <!-- /.row -->
+        </div>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->

@@ -103,5 +103,5 @@ public class CompraFacadeREST extends AbstractFacade<Compra> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
 }

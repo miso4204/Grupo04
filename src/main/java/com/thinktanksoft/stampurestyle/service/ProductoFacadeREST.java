@@ -6,6 +6,7 @@
 package com.thinktanksoft.stampurestyle.service;
 
 import com.thinktanksoft.stampurestyle.Producto;
+import com.thinktanksoft.stampurestyle.component.ShareController;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,7 +29,7 @@ import javax.ws.rs.Produces;
 @Path("producto")
 public class ProductoFacadeREST extends AbstractFacade<Producto> {
     @PersistenceContext(unitName = "com.thinktanksoft_StampUreStyle2.0_war_2.0-SNAPSHOTPU")
-    private EntityManager em;
+    private EntityManager em;       
 
     public ProductoFacadeREST() {
         super(Producto.class);
@@ -99,5 +100,6 @@ public class ProductoFacadeREST extends AbstractFacade<Producto> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
     
 }

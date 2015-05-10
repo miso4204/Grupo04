@@ -50,6 +50,7 @@ CREATE TABLE "public"."compra"(
  "com_ciudad" Character varying(30) NOT NULL,
  "com_direccion" Character varying(30) NOT NULL,
  "com_fecha" Date NOT NULL,
+ "com_observ" Character varying(100);
  "tip_pag_id" Integer NOT NULL,
  "tar_id" Integer,
  "usu_id" Integer NOT NULL,

@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -62,7 +63,7 @@ public class ProductodisenadoFacadeREST extends AbstractFacade<Productodisenado>
 
     @GET
     @Override
-    @Produces({"application/xml", "application/json"})
+    @Produces({"application/json"})
     public List<Productodisenado> findAll() {
         return super.findAll();
     }
@@ -79,6 +80,24 @@ public class ProductodisenadoFacadeREST extends AbstractFacade<Productodisenado>
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    @GET
+    @Path("nextId")
+    @Produces("text/plain")
+    public int siguienteId() {
+        int id =0;
+        
+        TypedQuery<Integer> query =
+            getEntityManager().createNamedQuery("Productodisenado.findNextId", Integer.class);
+        
+        
+         if (query.getSingleResult() != null) {
+            id = query.getSingleResult();
+        }
+
+        return id;
+        
     }
 
     @Override
