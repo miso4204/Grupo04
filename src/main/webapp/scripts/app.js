@@ -225,6 +225,20 @@ angular
                                     });
                                 }
                             }
+                        }).state('dashboard.oferta-edit', {
+                            templateUrl: 'views/oferta/oferta-edit.html',
+                            url: '/oferta-edit',
+                            controller: 'OfertaCtrl',
+                              resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/ofertaController.js'
+                                        ]
+                                    });
+                                }
+                            }
                         })
                           .state('dashboard.oferta-create', {
                             templateUrl: 'views/oferta/oferta-create.html',

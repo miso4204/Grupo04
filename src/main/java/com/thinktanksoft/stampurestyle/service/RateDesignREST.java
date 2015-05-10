@@ -42,8 +42,6 @@ public class RateDesignREST extends AbstractFacade<Diseno>{
         super.edit(entity);
     }
     
-    
-     
     @Override
     protected EntityManager getEntityManager() {
         return em;

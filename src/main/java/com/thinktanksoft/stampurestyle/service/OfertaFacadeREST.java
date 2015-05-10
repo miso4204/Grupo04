@@ -78,7 +78,7 @@ public class OfertaFacadeREST extends AbstractFacade<Oferta> {
     @Path("count")
     @Produces("text/plain")
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(super.count()+1);
     }
 
     @Override
