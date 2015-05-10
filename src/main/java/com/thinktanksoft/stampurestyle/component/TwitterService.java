@@ -13,13 +13,18 @@ public class TwitterService implements ShareService{
 
     
     @Override
-    public boolean share(long id) {
-        System.out.println("Comparti en tw");
-        return true;
+    public String share(long id) {
+        return "Compartido en Twitter";
     }
 
     @Override
     public String get(long id) {
-        return "<div>Twitter</div>";
+        System.out.println("Twitter");
+        return "<div class=\"panel panel-default\">\n" +
+                "  <div class=\"panel-body\"><img src=\"img/utils/twitter_icon.jpg\" alt=\"Twitter Icon\" class=\"col-lg-3\" style=\"padding:0\"></div>\n" +
+                "  <div class=\"panel-body\">\n" +
+                "  <a href='#'>#YoEstampeMiEstilo</a>, te invito a visitar <a href='#'>@StampUreStyle</a> y poner tu firma en lo que usas.\n" +
+                "  </div>\n" +
+                "</div>";
     }
 }

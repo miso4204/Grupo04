@@ -1,4 +1,4 @@
-﻿'use strict';
+'use strict';
 
 // the storeController contains two objects:
 // - store: contains the product list
@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos',
+    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos','$rootScope',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos) {
+            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos,$rootScope) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -93,7 +93,8 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.tarjetacredito = tarjeta;
                 compra.usuId = $scope.usuarioLogin;
                 compra.comId = idCompra;
-                ComprasFactory.create(compra);
+                ComprasFactory.create(compra);     
+                $rootScope.compra = compra;
                 var arreglDisenosPorProductodis = [];
                 var arreglProductoDisPorCompra = [];
                 var productoDisenado = $scope.cart.guardarProductoDisenado();
@@ -157,13 +158,12 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comValor = $scope.cart.getTotalPrice();
             compra.usuId = $scope.usuarioLogin;
             compra.comId = idCompra;
-            console.log('VALOR: ' + compra.comValor);
+            console.log('VALOR: ' + compra.comValor);            
             ComprasFactory.create(compra);
+            $rootScope.compra = compra;
             $location.path('dashboard/summary');
             $scope.cart.clearItems();
         };
-
-
 
     }]);
 

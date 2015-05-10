@@ -42,3 +42,7 @@ INSERT INTO usuario (usu_id, usu_usuario, usu_contrasena, per_id) VALUES (1, 'jc
 INSERT INTO usuario (usu_id, usu_usuario, usu_contrasena, per_id) VALUES (1174, 'alejo', 'alejo', 4607);
 INSERT INTO usuarioxperfil (usuper_id, usu_id, per_id) VALUES (1, 1, 2);
 INSERT INTO usuarioxperfil (usuper_id, usu_id, per_id) VALUES (8422, 1174, 2);
+
+/** to add new field to Compra**/
+
+ALTER TABLE compra ADD COLUMN com_observ text null;
