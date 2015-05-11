@@ -255,30 +255,8 @@ angular
                                 }
                             }
                         })
-                        /*
-                        .state('dashboard.reporte-ventas', {
-                            templateUrl: 'views/reporte-ventas.html',
-                            url: '/reporte-ventas',
-                            controller: 'ReporteVentasCtrl',
-                            resolve: {
-                                loadMyFile: function ($ocLazyLoad) {
-                                    return $ocLazyLoad.load(
-                                            'bower_components/Chart.js/Chart.min.js'
-                                            ),
-                                            $ocLazyLoad.load({
-                                                name: 'chart.js',
-                                                files: [
-                                                    'bower_components/angular-chart.js/dist/angular-chart.min.js',
-                                                    'bower_components/angular-chart.js/dist/angular-chart.css'
-                                                ]
-                                            }),
-                                            $ocLazyLoad.load({
-                                                name: 'sbAdminApp',
-                                                files: ['scripts/controllers/reporteVentasController.js']
-                                            })
-                                }
-                            }
-                        })*/
+                        
+                        
                         .state('dashboard.reporte-rating', {
                             templateUrl: 'views/reporte-rating.html',
                             url: '/reporte-rating',
