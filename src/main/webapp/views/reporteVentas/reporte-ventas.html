@@ -97,12 +97,13 @@
                             
                             <div class="form-group">
                                 <label>Filtrar por Mes</label>
-                                <select ng-options="month.num as month.mes for month in meses" ng-model="meseslist" class="form-control" >
+                                <select ng-click="setTab(false)"
+                                        ng-options="month.num as month.mes for month in meses" ng-model="meseslist" class="form-control" >
                                 </select>
                             </div>
                             
 
-                            <div class="table-responsive">
+                            <div class="table-responsive" ng-show="tab == false">
                                 <table class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -141,6 +142,60 @@
                                     </tbody>
                                 </table>
                             </div>
+                            
+                           
+                            <div class="table-responsive" ng-show="tab == true">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            
+                                            <th >
+                                                Nombre Artista
+                                         
+                                            </th>
+                                            <th>
+                                                Apellido Artista
+                                                
+                                            </th>
+                                            <th>
+                                                Mes
+                                                
+                                            </th>
+                                            <th>
+                                                Año
+                                                
+                                            </th>
+                                            <th>
+                                                Valor Total en Pesos
+                                                
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="reporte2 in repventas">
+                                            <th>{{reporte2.nombre}}</th>
+                                            <td>{{reporte2.apellido}}</td>
+                                            <td>{{reporte2.mes | monthName}}</td>
+                                            <td>{{reporte2.ano}}</td>
+                                            <td>{{reporte2.total | currency}}</td>
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
                         </div>
                     </div>
                 </div>
