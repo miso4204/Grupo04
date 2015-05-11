@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+	<featureModel chosenLayoutAlgorithm="4">
+		<struct>
+			<and abstract="true" mandatory="true" name="Estampate">
+				<and mandatory="true" name="catalogo">
+					<and mandatory="true" name="products">
+						<feature mandatory="true" name="searchProducts"/>
+						<feature name="rateproducts"/>
+					</and>
+					<and mandatory="true" name="design">
+						<feature mandatory="true" name="searchDesign"/>
+						<feature name="RateDesigns"/>
+					</and>
+					<or mandatory="true" name="views">
+						<feature mandatory="true" name="gallery"/>
+						<feature mandatory="true" name="list"/>
+					</or>
+				</and>
+				<feature mandatory="true" name="shoppingcart"/>
+				<and mandatory="true" name="productadmin">
+					<and mandatory="true" name="productDesign">
+						<feature mandatory="true" name="size"/>
+						<feature name="text"/>
+						<feature name="color"/>
+						<feature mandatory="true" name="stampDesign"/>
+					</and>
+				</and>
+				<and mandatory="true" name="pay">
+					<feature mandatory="true" name="creditcart"/>
+					<feature mandatory="true" name="pse"/>
+					<feature name="cashOnDelivery"/>
+				</and>
+				<and mandatory="true" name="user">
+					<and mandatory="true" name="session">
+						<feature mandatory="true" name="login"/>
+						<feature mandatory="true" name="logout"/>
+					</and>
+					<and mandatory="true" name="updateProfile">
+						<feature name="changePassword"/>
+						<feature name="changeAddress"/>
+					</and>
+					<feature mandatory="true" name="createAccount"/>
+				</and>
+				<and name="reports">
+					<and name="rating">
+						<feature mandatory="true" name="Design"/>
+						<feature name="DesignByArtist"/>
+					</and>
+					<and name="sales">
+						<feature name="ByArtist"/>
+						<feature mandatory="true" name="ByPeriod"/>
+					</and>
+				</and>
+				<alt name="socialnetwork">
+					<feature mandatory="true" name="facebook"/>
+					<feature mandatory="true" name="twitter"/>
+				</alt>
+				<and name="specialoffers">
+					<feature name="createPromo"/>
+					<feature name="updatePromo"/>
+				</and>
+				<and mandatory="true" name="QualityAttributes">
+					<feature mandatory="true" name="configurability"/>
+					<feature name="scalability"/>
+					<feature mandatory="true" name="functionability"/>
+					<feature name="performance"/>
+				</and>
+				<alt mandatory="true" name="tipodeaplicacion">
+					<feature mandatory="true" name="Basico"/>
+					<feature mandatory="true" name="avanzado"/>
+					<feature mandatory="true" name="Medio"/>
+				</alt>
+			</and>
+		</struct>
+		<constraints>
+			<rule>
+				<imp>
+					<var>RateDesigns</var>
+					<var>rating</var>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>avanzado</var>
+					<conj>
+						<var>changePassword</var>
+						<conj>
+							<var>rating</var>
+							<conj>
+								<var>DesignByArtist</var>
+								<conj>
+									<var>ByArtist</var>
+									<conj>
+										<var>facebook</var>
+										<conj>
+											<var>rateproducts</var>
+											<conj>
+												<var>RateDesigns</var>
+												<conj>
+													<var>text</var>
+													<conj>
+														<var>color</var>
+														<conj>
+															<var>scalability</var>
+															<conj>
+																<var>performance</var>
+																<conj>
+																	<var>list</var>
+																	<conj>
+																		<var>gallery</var>
+																		<conj>
+																			<var>cashOnDelivery</var>
+																			<conj>
+																				<var>changeAddress</var>
+																				<conj>
+																					<var>createPromo</var>
+																					<var>updatePromo</var>
+																				</conj>
+																			</conj>
+																		</conj>
+																	</conj>
+																</conj>
+															</conj>
+														</conj>
+													</conj>
+												</conj>
+											</conj>
+										</conj>
+									</conj>
+								</conj>
+							</conj>
+						</conj>
+					</conj>
+				</imp>
+			</rule>
+			<rule>
+				<disj>
+					<var>Basico</var>
+					<disj>
+						<var>avanzado</var>
+						<var>Medio</var>
+					</disj>
+				</disj>
+			</rule>
+			<rule>
+				<imp>
+					<var>Basico</var>
+					<conj>
+						<var>changePassword</var>
+						<conj>
+							<not>
+								<var>reports</var>
+							</not>
+							<conj>
+								<not>
+									<var>socialnetwork</var>
+								</not>
+								<conj>
+									<not>
+										<var>rateproducts</var>
+									</not>
+									<conj>
+										<not>
+											<var>RateDesigns</var>
+										</not>
+										<conj>
+											<not>
+												<var>text</var>
+											</not>
+											<conj>
+												<not>
+													<var>color</var>
+												</not>
+												<conj>
+													<not>
+														<var>specialoffers</var>
+													</not>
+													<conj>
+														<not>
+															<var>scalability</var>
+														</not>
+														<conj>
+															<not>
+																<var>performance</var>
+															</not>
+															<conj>
+																<not>
+																	<var>list</var>
+																</not>
+																<conj>
+																	<var>gallery</var>
+																	<conj>
+																		<not>
+																			<var>cashOnDelivery</var>
+																		</not>
+																		<var>changeAddress</var>
+																	</conj>
+																</conj>
+															</conj>
+														</conj>
+													</conj>
+												</conj>
+											</conj>
+										</conj>
+									</conj>
+								</conj>
+							</conj>
+						</conj>
+					</conj>
+				</imp>
+			</rule>
+			<rule>
+				<imp>
+					<var>Medio</var>
+					<conj>
+						<var>changePassword</var>
+						<conj>
+							<var>rating</var>
+							<conj>
+								<not>
+									<var>DesignByArtist</var>
+								</not>
+								<conj>
+									<not>
+										<var>sales</var>
+									</not>
+									<conj>
+										<var>rateproducts</var>
+										<conj>
+											<var>RateDesigns</var>
+											<conj>
+												<var>text</var>
+												<conj>
+													<var>color</var>
+													<conj>
+														<var>twitter</var>
+														<conj>
+															<not>
+																<var>scalability</var>
+															</not>
+															<conj>
+																<not>
+																	<var>performance</var>
+																</not>
+																<conj>
+																	<var>list</var>
+																	<conj>
+																		<var>gallery</var>
+																		<conj>
+																			<not>
+																				<var>cashOnDelivery</var>
+																			</not>
+																			<conj>
+																				<var>changeAddress</var>
+																				<not>
+																					<var>specialoffers</var>
+																				</not>
+																			</conj>
+																		</conj>
+																	</conj>
+																</conj>
+															</conj>
+														</conj>
+													</conj>
+												</conj>
+											</conj>
+										</conj>
+									</conj>
+								</conj>
+							</conj>
+						</conj>
+					</conj>
+				</imp>
+			</rule>
+		</constraints>
+		<calculations Auto="true" Constraints="true" Features="true" Redundant="true" Tautology="true"/>
+		<comments/>
+		<featureOrder userDefined="false"/>
+	</featureModel>

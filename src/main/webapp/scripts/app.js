@@ -254,7 +254,8 @@ angular
                                     });
                                 }
                             }
-                        })                             
+                        })
+                        /*
                         .state('dashboard.reporte-ventas', {
                             templateUrl: 'views/reporte-ventas.html',
                             url: '/reporte-ventas',
@@ -277,7 +278,7 @@ angular
                                             })
                                 }
                             }
-                        })
+                        })*/
                         .state('dashboard.reporte-rating', {
                             templateUrl: 'views/reporte-rating.html',
                             url: '/reporte-rating',
@@ -549,6 +550,22 @@ angular
                                 }
                             }
                         })
+                        .state('dashboard.reporteVentas', {
+                            templateUrl: 'views/reporteVentas/reporte-ventas.html',
+                            url: '/reporte-ventas',
+                            controller: 'ReporteVentasCTRL',
+                              resolve: {
+                                loadMyFiles: function ($ocLazyLoad) {
+                                    return $ocLazyLoad.load({
+                                        name: 'sbAdminApp',
+                                        files: [
+                                            'scripts/controllers/ReporteVentasCTRL.js'
+                                        ]
+                                    });
+                                }
+                            }
+                        })
+                        
 
                         .state('dashboard.buttons', {
                             templateUrl: 'views/ui-elements/buttons.html',

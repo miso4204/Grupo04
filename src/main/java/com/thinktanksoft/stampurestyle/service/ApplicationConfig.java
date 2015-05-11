@@ -85,13 +85,13 @@ public class ApplicationConfig extends Application {
         resources.add(com.thinktanksoft.stampurestyle.service.ProductodisenadoFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.ProductotallaFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.RateDesignREST.class);
+        resources.add(com.thinktanksoft.stampurestyle.service.ReporteVentasFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.TallaFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.TarjetacreditoFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.TipopagoFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.UsuarioFacadeREST.class);
-        resources.add(com.thinktanksoft.stampurestyle.service.UsuarioxperfilFacadeREST.class);
-
         //addRestResourceClasses(resources);
+        resources.add(com.thinktanksoft.stampurestyle.service.UsuarioxperfilFacadeREST.class);
     }
 
     /**
