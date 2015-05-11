@@ -27,7 +27,7 @@
                                 <td>{{oferta.ofeNombre}}</td>
                                 <td  align="center" >{{oferta.ofeDescuento}}<b>%</b></td>
                                 <td align="center" ><input type="checkbox" ng-checked="oferta.ofeVigente" disabled="true"></td>
-                                <td><button type="button" class="btn-block btn btn-primary" ng-click="goEdit(oferta)">Editar</button></td>
+                                <td><button type="button" class="btn-block btn btn-primary" ng-click="goEdit(oferta.ofeId)">Editar</button></td>
                             </tr>
                             
                         </tbody>

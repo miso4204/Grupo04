@@ -24,11 +24,18 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
         $scope.productoDisenadoId = ProductoDisenadoFactory.nextId();
         $scope.disenosPorProductoId = DisenosPorProductoDisenadoFactory.nextId();
         $scope.productoDisPorCompraId = ProductosDisenadosPorCompraFactory.nextId();
-
+    
+        $scope.cart.descuento =0;
+        $scope.descuentoAplicado=false;
 
         $scope.pagoPSE = {direccion: null};
         $scope.pseBanco = bancos.bancos;
         $scope.pagoPSE.direccion = $scope.usuarioLogin.perId.perDireccion;
+        
+        $scope.buscarDescuento = function () {
+           $scope.cart.descuento =50;
+           $scope.descuentoAplicado=true;
+        }
 
         $scope.createAction = function () {
             var idTarjeta = '';

@@ -30,7 +30,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Oferta.findByOfeId", query = "SELECT o FROM Oferta o WHERE o.ofeId = :ofeId"),
     @NamedQuery(name = "Oferta.findByOfeNombre", query = "SELECT o FROM Oferta o WHERE o.ofeNombre = :ofeNombre"),
     @NamedQuery(name = "Oferta.findByOfeDescuento", query = "SELECT o FROM Oferta o WHERE o.ofeDescuento = :ofeDescuento"),
-    @NamedQuery(name = "Oferta.findByOfeVigente", query = "SELECT o FROM Oferta o WHERE o.ofeVigente = :ofeVigente")})
+    @NamedQuery(name = "Oferta.findByOfeVigente", query = "SELECT o FROM Oferta o WHERE o.ofeVigente = :ofeVigente"),
+    @NamedQuery(name = "Oferta.findByCode", query = "SELECT o.ofeDescuento FROM Oferta o WHERE o.ofeNombre = :ofeNombre")})
 public class Oferta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
