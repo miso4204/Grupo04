@@ -4,8 +4,16 @@ angular.module('sbAdminApp').controller('ReporteVentasCTRL', ['$scope','ReporteV
     function ($scope, ReporteVentasFactory,$location, $cookies) {
         
         
-        $scope.julio = "probando sonido" ;
+        
         $scope.repventas = ReporteVentasFactory.query();
+        
+        $scope.tab = true ;
+        
+        $scope.setTab = function(newValue){
+            $scope.tab = newValue;
+          };
+          
+         
         
         /*
         $scope.IMAGE_LOCATION = "./data/";
