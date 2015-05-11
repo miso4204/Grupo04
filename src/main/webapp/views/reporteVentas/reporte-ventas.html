@@ -94,6 +94,14 @@
                             </div> 
                         <div class="panel-body" >
                             
+                            
+                            <div class="form-group">
+                                <label>Filtrar por Mes</label>
+                                <select ng-options="month.num as month.mes for month in meses" ng-model="meseslist" class="form-control" >
+                                </select>
+                            </div>
+                            
+
                             <div class="table-responsive">
                                 <table class="table table-bordered table-striped">
                                     <thead>
@@ -122,7 +130,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="reporte in repventas |filter:usu.nombre">
+                                        <tr ng-repeat="reporte in repventas | filter:{mes:meseslist}">
                                             <th>{{reporte.nombre}}</th>
                                             <td>{{reporte.apellido}}</td>
                                             <td>{{reporte.mes | monthName}}</td>
