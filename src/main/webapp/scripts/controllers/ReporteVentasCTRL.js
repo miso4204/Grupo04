@@ -6,6 +6,7 @@ angular.module('sbAdminApp').controller('ReporteVentasCTRL', ['$scope','ReporteV
         
         $scope.julio = "probando sonido" ;
         $scope.repventas = ReporteVentasFactory.query();
+        
         /*
         $scope.IMAGE_LOCATION = "./data/";
         $scope.showSelected = function(image) {
@@ -77,8 +78,21 @@ angular.module('sbAdminApp').controller('ReporteVentasCTRL', ['$scope','ReporteV
             DisenosFactory.create($scope.disenoc);
             $location.path('dashboard/diseno-list');
         };
-        
+        */
+         $scope.meses = [ {"num": 1, "mes": 'Enero'},
+                          {"num": 2, "mes": 'Febrero'},
+                          {"num": 3, "mes": 'Marzo'},
+                          {"num": 4, "mes": 'Abril'},
+                          {"num": 5, "mes": 'Mayo'},
+                          {"num": 6, "mes": 'Junio'},
+                          {"num": 7, "mes": 'Julio'},
+                          {"num": 8, "mes": 'Agosto'},
+                          {"num": 9, "mes": 'Septiembre'},
+                          {"num": 10, "mes": 'Octubre'},
+                          {"num": 11, "mes": 'Noviembre'},
+                          {"num": 12, "mes": 'Diciembre'}];
          
+         /*
         $scope.updateAction = function () {
             console.log("hizo update");
             DisenoFactory.update($scope.diseno);
