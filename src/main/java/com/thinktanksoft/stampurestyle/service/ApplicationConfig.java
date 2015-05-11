@@ -16,7 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 /**
- * 
+ *
  * @author yerson
  */
 @javax.ws.rs.ApplicationPath("webresources")
@@ -90,7 +90,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.thinktanksoft.stampurestyle.service.TarjetacreditoFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.TipopagoFacadeREST.class);
         resources.add(com.thinktanksoft.stampurestyle.service.UsuarioFacadeREST.class);
-
         //addRestResourceClasses(resources);
         resources.add(com.thinktanksoft.stampurestyle.service.UsuarioxperfilFacadeREST.class);
     }
