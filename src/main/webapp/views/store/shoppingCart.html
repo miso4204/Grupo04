@@ -145,10 +145,17 @@
                                     <input class="tdRight" id="CVC" type="text" placeholder="cvc" 
                                            ng-disabled="disabled" ng-value="{{pagoTarjeta.cvc}}" ng-model="pagoTarjeta.cvc">
                                 </div>
+                                <div class="form-group">
+                                    <label for="descuento" >Aplicar Descuento</label>
+                                    <input  id="descuento" type="text" placeholder="Código del Descuento" 
+                                           ng-disabled="disabled" ng-value="{{codigodescuento}}" ng-model="codigodescuento">
+                                    <button ng-click="buscarDescuento()">buscar</button>
+                                    <label  ng-hide="!descuentoAplicado">Se aplicó descuento del {{cart.descuento}}%</label>
+                                </div>
 
                                 <label  >Total:</label>
                                 <div class="form-group input-group">
-                                    <span class="input-group-addon"><b>{{cart.getTotalPrice() | currency}}</b></span>
+                                    <span class="input-group-addon"><b>{{(cart.getTotalPrice())| currency}}</b></span>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -201,7 +208,69 @@
                                         <option ng-repeat="banco in pseBanco">{{banco.nombre}}</option>
                    
                                     </select>
-                                                                      
+                                    <div class="form-group">
+                                    <label for="descuento" >Aplicar Descuento</label>
+                                    <input  id="descuento" type="text" placeholder="Código del Descuento" 
+                                           ng-disabled="disabled" ng-value="{{codigodescuento}}" ng-model="codigodescuento">
+                                    <button ng-click="buscarDescuento()">buscar</button>
+                                    <label  ng-hide="!descuentoAplicado">Se aplicó descuento del {{cart.descuento}}%</label>
+                                    </div>                                  
+                                    <label  >Total:</label>
+                                    <div class="form-group input-group">
+                                        <span class="input-group-addon"><b>{{cart.getTotalPrice() | currency}}</b></span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                    <button type="button" class="btn btn-primary" ng-click="createbyPSE()">Checkout</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
+                 <button 
+                        class="btn btn-block btn-lg" data-toggle="modal" data-target="#modalDelivery"
+                        ng-disabled="cart.getTotalCount() < 1">
+                        <i class="icon-ok icon-white" /> Checkout con Pago en la Entrega
+                    </button>
+                    <button 
+                        class="btn btn-block btn-link" data-toggle="modal" data-target="#modalDelivery"
+                        ng-disabled="cart.getTotalCount() < 1" >
+                        <img src="http://www.aswera.com/userfiles/images/indexdf.jpg" alt="checkoutOnDelivery"/>
+                    </button> 
+                            <!-- Modal -->
+                    <div class="modal fade" id="modalDelivery" tabindex="-1" role="dialog" aria-labelledby="modalDelivery" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title" id="modalCreditCart">Checkout con pago en la entrega</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label for="pais" >País</label>
+                                        <input class="form-control" id="pais" type="text" placeholder="País" 
+                                                ng-value="{{pagoPSE.pais}}" ng-model="pagoPSE.pais">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ciudad" >Ciudad</label>
+                                        <input class="form-control" id="ciudad" type="text" placeholder="Ciudad" 
+                                               ng-disabled="disabled" ng-value="{{pagoPSE.ciudad}}" ng-model="pagoPSE.ciudad">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="direccion" >Dirección</label>
+                                        <input class="form-control" id="direccion" type="text" placeholder="Direccion" 
+                                               ng-disabled="disabled" ng-value="{{pagoPSE.direccion}}" ng-model="pagoPSE.direccion">
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="descuento" >Aplicar Descuento</label>
+                                    <input  id="descuento" type="text" placeholder="Código del Descuento" 
+                                           ng-disabled="disabled" ng-value="{{codigodescuento}}" ng-model="codigodescuento">
+                                    <button ng-click="buscarDescuento()">buscar</button>
+                                    <label  ng-hide="!descuentoAplicado">Se aplicó descuento del {{cart.descuento}}%</label>
+                                    </div>                                  
                                     <label  >Total:</label>
                                     <div class="form-group input-group">
                                         <span class="input-group-addon"><b>{{cart.getTotalPrice() | currency}}</b></span>

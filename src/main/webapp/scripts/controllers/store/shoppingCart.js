@@ -7,6 +7,7 @@
             this.checkoutParameters = {};
             this.items = [];
             this.designs = [];
+            this.descuento=0;
 
             // load items from local storage when initializing
             this.loadItems();
@@ -153,6 +154,7 @@ shoppingCart.prototype.getTotalPrice = function (id) {
             }
         }
     }
+    total = total - (total * this.descuento /100);
     return total;
 }
 

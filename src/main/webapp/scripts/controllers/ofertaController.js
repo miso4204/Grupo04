@@ -1,20 +1,24 @@
 //Este controlador lo maneja la pagina diseno-list y 
 //borra y envia a la pagina de crear y actualizar diseño
-angular.module('sbAdminApp').controller('OfertaCtrl', ['$scope','$location','$cookies','OfertaFactory','OfertasFactory',
-    function ($scope,$location, $cookies,OfertaFactory,OfertasFactory) {
+angular.module('sbAdminApp').controller('OfertaCtrl', ['$scope','$stateParams','$location','$cookies','OfertaFactory','OfertasFactory',
+    function ($scope,$stateParams,$location, $cookies,OfertaFactory,OfertasFactory) {
         
         
         $scope.disabled=true;
         $scope.ofertac={};
         $scope.ofertae={};
         $scope.siguienteId = OfertaFactory.count();
-       
+        
+        if($stateParams.ofeId !== null){
+            
+            $scope.ofertae = OfertaFactory.show({id: $stateParams.ofeId});
+        }
         
         $scope.ofertas = OfertasFactory.query();
-        $scope.goEdit = function (oferta) {
-            $scope.ofertae = oferta;
-            console.log(JSON.stringify($scope.ofertae));
-            $location.path('dashboard/oferta-edit');
+        $scope.goEdit = function (ofeId) {
+            //$scope.ofertae = oferta;
+            //console.log(JSON.stringify($scope.ofertae));
+            $location.path('dashboard/oferta-edit/'+ofeId);
         };
         
         $scope.editAction = function (oferta) {

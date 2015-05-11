@@ -227,7 +227,7 @@ angular
                             }
                         }).state('dashboard.oferta-edit', {
                             templateUrl: 'views/oferta/oferta-edit.html',
-                            url: '/oferta-edit',
+                            url: '/oferta-edit/:ofeId',
                             controller: 'OfertaCtrl',
                               resolve: {
                                 loadMyFiles: function ($ocLazyLoad) {

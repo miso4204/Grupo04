@@ -6,10 +6,12 @@
 package com.thinktanksoft.stampurestyle.service;
 
 import com.thinktanksoft.stampurestyle.Oferta;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -79,6 +81,15 @@ public class OfertaFacadeREST extends AbstractFacade<Oferta> {
     @Produces("text/plain")
     public String countREST() {
         return String.valueOf(super.count()+1);
+    }
+    @GET
+    @Path("descuento/{id}")
+    @Produces("text/plain")
+    public BigDecimal descuento(@PathParam("id") String id) {
+        Query query = getEntityManager().createNamedQuery("Oferta.findByCode");
+        query.setParameter("ofeNombre", id);
+        
+        return (BigDecimal) query.getSingleResult();
     }
 
     @Override
