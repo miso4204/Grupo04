@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra','ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos','$rootScope',
+    'TarjetaFactoryCompra', 'ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos', '$rootScope',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra,ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos,$rootScope) {
+            TarjetaFactoryCompra, ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos, $rootScope) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -24,17 +24,17 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
         $scope.productoDisenadoId = ProductoDisenadoFactory.nextId();
         $scope.disenosPorProductoId = DisenosPorProductoDisenadoFactory.nextId();
         $scope.productoDisPorCompraId = ProductosDisenadosPorCompraFactory.nextId();
-    
-        $scope.cart.descuento =0;
-        $scope.descuentoAplicado=false;
+
+        $scope.cart.descuento = 0;
+        $scope.descuentoAplicado = false;
 
         $scope.pagoPSE = {direccion: null};
         $scope.pseBanco = bancos.bancos;
         $scope.pagoPSE.direccion = $scope.usuarioLogin.perId.perDireccion;
-        
+
         $scope.buscarDescuento = function () {
-           $scope.cart.descuento =50;
-           $scope.descuentoAplicado=true;
+            $scope.cart.descuento = 50;
+            $scope.descuentoAplicado = true;
         }
 
         $scope.createAction = function () {
@@ -88,7 +88,7 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             tarjeta.persona = $scope.usuarioLogin.perId;
 
             tarjeta.tarjetacreditoPK = {perId: $scope.usuarioLogin.perId.perId, tarId: idTarjeta};
-
+            $rootScope.compra = {"comId": idCompra};
             TarjetasFactoryCompra.create(tarjeta);
             $timeout(function () {
                 var compra = {comCiudad: null, comDireccion: null, comId: null, comPais: null, comValor: null, tarjetacredito: null,
@@ -100,7 +100,7 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 compra.tarjetacredito = tarjeta;
                 compra.usuId = $scope.usuarioLogin;
                 compra.comId = idCompra;
-                ComprasFactory.create(compra);     
+                ComprasFactory.create(compra);
                 $rootScope.compra = compra;
                 var arreglDisenosPorProductodis = [];
                 var arreglProductoDisPorCompra = [];
@@ -143,18 +143,44 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 $scope.cart.clearItems();
 
             }, 1000);
-            $location.path('dashboard/summary');
+            $timeout(function () {
+                $location.path('dashboard/summary');
+            }, 2000);
         };
+
+
         $scope.createbyPSE = function () {
 
             var idCompra = '';
             var key = '';
+            var idProductoDisenado = '';
+            var idDisenodPorProdDis = '';
+            var idProductoDisPorCompra = '';
 
             for (key in $scope.siguienteId)
             {
                 if (key === '$promise')
                     break;
                 idCompra = idCompra + $scope.siguienteId[key];
+            }
+
+            for (key in $scope.productoDisenadoId)
+            {
+                if (key === '$promise')
+                    break;
+                idProductoDisenado = idProductoDisenado + $scope.productoDisenadoId[key];
+            }
+            for (key in $scope.disenosPorProductoId)
+            {
+                if (key === '$promise')
+                    break;
+                idDisenodPorProdDis = idDisenodPorProdDis + $scope.disenosPorProductoId[key];
+            }
+            for (key in $scope.productoDisPorCompraId)
+            {
+                if (key === '$promise')
+                    break;
+                idProductoDisPorCompra = idProductoDisPorCompra + $scope.productoDisPorCompraId[key];
             }
 
             var compra = {comCiudad: null, comDireccion: null, comId: null, comPais: null, comValor: null, tarjetacredito: null,
@@ -165,11 +191,53 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
             compra.comValor = $scope.cart.getTotalPrice();
             compra.usuId = $scope.usuarioLogin;
             compra.comId = idCompra;
-            console.log('VALOR: ' + compra.comValor);            
+            console.log('VALOR: ' + compra.comValor);
             ComprasFactory.create(compra);
             $rootScope.compra = compra;
-            $location.path('dashboard/summary');
+            //desde aqui
+            console.log('desde aqui');
+            var arreglDisenosPorProductodis = [];
+            var arreglProductoDisPorCompra = [];
+            var productoDisenado = $scope.cart.guardarProductoDisenado();
+            // item data
+            for (var i = 0; i < productoDisenado.length; i++) {
+                var item = productoDisenado[i];
+                var price = $scope.cart.getPrice(item.id);
+                var productodisenado = {"proDisCantidad": item.quantity, "proDisId": idProductoDisenado, "proDisValor": price, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": item.sku, "proNombre": null, "proUrl": null, "proValor": 0}};
+                var productoDisPorCompra = {"comId": {"comCiudad": null, "comDireccion": null, "comId": idCompra, "comPais": null, "comValor": 0, "tarjetacredito": {"persona": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "tarCodigoSeguridad": 0, "tarFechaExpiracion": null, "tarNumero": null, "tarTipo": null, "tarjetacreditoPK": {"perId": 0, "tarId": 0}}, "tipPagId": {"tipPagId": 0, "tipPagNombre": null}, "usuId": {"perId": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "usuContrasena": null, "usuId": 0, "usuUsuario": null}}, "proDisId": {"proDisCantidad": 0, "proDisId": idProductoDisenado, "proDisValor": 0, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": 0, "proNombre": null, "proUrl": null, "proValor": 0}}, "prodisComId": idProductoDisPorCompra};
+                arreglProductoDisPorCompra.push(productoDisPorCompra);
+                //Se almacena el producto diseñado
+                ProductoDisenadosFactory.create(productodisenado);
+                if (item.designsPro === undefined) {
+                } else {
+                    for (var j = 0; j < item.designsPro.length; j++) {
+                        var des = item.designsPro[j];
+                        var disenosPorProductodis = {"disId": {"catId": {"catId": 0, "catNombre": null}, "disId": des.sku, "disNombre": null, "disNumeroVentas": 0, "disUrl": null, "disValor": 0, "estId": {"estId": 0, "estNombre": null}, "usuId": {"perId": {"perDireccion": null, "perEmail": null, "perId": 0, "perNumeroDocumento": null, "perPrimerApelido": null, "perPrimerNombre": null, "perTipoDocumento": null}, "usuContrasena": null, "usuId": 0, "usuUsuario": null}}, "disProdisId": idDisenodPorProdDis, "disProdisPosicion": 1, "proDisId": {"proDisCantidad": 0, "proDisId": idProductoDisenado, "proDisValor": 0, "proId": {"catId": {"catId": 0, "catNombre": null}, "estId": {"estId": 0, "estNombre": null}, "proCantidad": 0, "proId": 0, "proNombre": null, "proUrl": null, "proValor": 0}}};
+                        arreglDisenosPorProductodis.push(disenosPorProductodis);
+                        //DisenosPorProductoDisenadosFactory.create(disenosPorProductodis);
+                        idDisenodPorProdDis = parseInt(idDisenodPorProdDis) + parseInt(1);
+                    }
+                }
+
+                idProductoDisenado = parseInt(idProductoDisenado) + parseInt(1);
+                idProductoDisPorCompra = parseInt(idProductoDisPorCompra) + parseInt(1);
+            }
+            $timeout(function () {
+                for (var o = 0; o < arreglDisenosPorProductodis.length; o++) {
+                    var dpp = arreglDisenosPorProductodis[o];
+                    DisenosPorProductoDisenadosFactory.create(dpp);
+                }
+            }, 1000);
+            $timeout(function () {
+                for (var p = 0; p < arreglProductoDisPorCompra.length; p++) {
+                    var pdpc = arreglProductoDisPorCompra[p];
+                    ProductosDisenadosPorCompraFactorysFactory.create(pdpc);
+                }
+            }, 1000);
             $scope.cart.clearItems();
+            console.log('hasta qui');
+            //hasta qui
+            $location.path('dashboard/summary');
         };
 
     }]);
