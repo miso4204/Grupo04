@@ -8,6 +8,8 @@
             this.items = [];
             this.designs = [];
             this.descuento=0;
+            this.texto =null;
+            this.color=null;
 
             // load items from local storage when initializing
             this.loadItems();
@@ -98,10 +100,14 @@ shoppingCart.prototype.removeItem = function (sku, name, price, quantity) {
 
 
 // adds an product to the cart
-shoppingCart.prototype.addProduct = function (sku, name, price, quantity) {
+shoppingCart.prototype.addProduct = function (sku, name, price, quantity, texto, color) {
     quantity = this.toNumber(quantity);
     var id = 1;
     if (quantity != 0) {
+        
+        this.texto= texto;
+        this.color=String(color).replace("#","");        
+        console.log("color: "+JSON.stringify(this.color));
 
         // update quantity for existing item
         var found = false;
@@ -438,6 +444,13 @@ shoppingCart.prototype.listarProductos = function () {
 
 shoppingCart.prototype.guardarProductoDisenado = function () {
   return this.items;
+}
+
+shoppingCart.prototype.getTexto = function () {
+  return this.texto;
+}
+shoppingCart.prototype.getColor = function () {
+  return this.color;
 }
 
 shoppingCart.prototype.getPrice = function (id) {

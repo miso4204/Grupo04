@@ -6,9 +6,9 @@
 var app = angular.module("sbAdminApp");
 
 app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataService', '$cookies', '$timeout',
-    'TarjetaFactoryCompra', 'ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory', '$location', 'bancos', '$rootScope',
+    'TarjetaFactoryCompra', 'ProductosDisenadosPorCompraFactorysFactory', 'ProductosDisenadosPorCompraFactory', 'ProductoDisenadoFactory', 'CompraFactory', 'ProductoFactory', 'TarjetasFactoryCompra', 'ComprasFactory', 'ProductoDisenadosFactory', 'DisenosPorProductoDisenadoFactory', 'DisenosPorProductoDisenadosFactory','TextColorFactory','OfertaFactory', '$location', 'bancos', '$rootScope',
     function ($scope, UsuarioFactoryCompra, DataService, $cookies, $timeout,
-            TarjetaFactoryCompra, ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, $location, bancos, $rootScope) {
+            TarjetaFactoryCompra, ProductosDisenadosPorCompraFactorysFactory, ProductosDisenadosPorCompraFactory, ProductoDisenadoFactory, CompraFactory, ProductoFactory, TarjetasFactoryCompra, ComprasFactory, ProductoDisenadosFactory, DisenosPorProductoDisenadoFactory, DisenosPorProductoDisenadosFactory, TextColorFactory,OfertaFactory, $location, bancos, $rootScope) {
 
         // get store and cart from service
         $scope.store = DataService.store;
@@ -33,8 +33,26 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
         $scope.pagoPSE.direccion = $scope.usuarioLogin.perId.perDireccion;
 
         $scope.buscarDescuento = function () {
-            $scope.cart.descuento = 50;
-            $scope.descuentoAplicado = true;
+            $scope.descuentoJSON= OfertaFactory.show({id: $scope.codigodescuento});
+            $timeout(function () {
+                 var descuentoSer = '';
+                 var key = '';
+                for (key in $scope.descuentoJSON)
+                {
+                    if (key === '$promise')break;
+                    descuentoSer=descuentoSer+$scope.descuentoJSON[key];
+                }
+                var porcDesc=Number(descuentoSer);
+                $scope.cart.descuento = porcDesc;
+                if(porcDesc >0){
+                    $scope.descuentoAplicado = true;
+                }else {
+                    $scope.descuentoAplicado = false;
+                }
+                console.log("descuento" + porcDesc);
+            },2000);
+            
+           
         }
 
         $scope.createAction = function () {
@@ -114,6 +132,9 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                     arreglProductoDisPorCompra.push(productoDisPorCompra);
                     //Se almacena el producto diseñado
                     ProductoDisenadosFactory.create(productodisenado);
+                    var idTextoColor=idProductoDisenado;
+                    
+                    
                     if (item.designsPro === undefined) {
                     } else {
                         for (var j = 0; j < item.designsPro.length; j++) {
@@ -127,7 +148,13 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
 
                     idProductoDisenado = parseInt(idProductoDisenado) + parseInt(1);
                     idProductoDisPorCompra = parseInt(idProductoDisPorCompra) + parseInt(1);
+                    
                 }
+                $timeout(function () {
+                        var textcolor={"texcolId":idTextoColor,"texcolTexto":$scope.cart.getTexto(),"texcolColor":$scope.cart.getColor()};
+                        TextColorFactory.create(textcolor);
+                        console.log("textocolorguardado");
+                    }, 2000);
                 $timeout(function () {
                     for (var o = 0; o < arreglDisenosPorProductodis.length; o++) {
                         var dpp = arreglDisenosPorProductodis[o];
@@ -143,6 +170,7 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 $scope.cart.clearItems();
 
             }, 1000);
+            
             $timeout(function () {
                 $location.path('dashboard/summary');
             }, 2000);
@@ -208,6 +236,8 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 arreglProductoDisPorCompra.push(productoDisPorCompra);
                 //Se almacena el producto diseñado
                 ProductoDisenadosFactory.create(productodisenado);
+                var idTextoColor=idProductoDisenado;
+                
                 if (item.designsPro === undefined) {
                 } else {
                     for (var j = 0; j < item.designsPro.length; j++) {
@@ -223,6 +253,11 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                 idProductoDisPorCompra = parseInt(idProductoDisPorCompra) + parseInt(1);
             }
             $timeout(function () {
+                        var textcolor={"texcolId":idTextoColor,"texcolTexto":$scope.cart.getTexto(),"texcolColor":$scope.cart.getColor()};
+                        TextColorFactory.create(textcolor);
+                        console.log("textocolorguardado");
+                    }, 2000);
+            $timeout(function () {
                 for (var o = 0; o < arreglDisenosPorProductodis.length; o++) {
                     var dpp = arreglDisenosPorProductodis[o];
                     DisenosPorProductoDisenadosFactory.create(dpp);
@@ -234,6 +269,11 @@ app.controller('storeController', ['$scope', 'UsuarioFactoryCompra', 'DataServic
                     ProductosDisenadosPorCompraFactorysFactory.create(pdpc);
                 }
             }, 1000);
+            $timeout(function () {
+                var textcolor={"texcolID":idProductoDisenado,"texcolTexto":$scope.cart.texto,"texcolColor":$scope.cart.color};
+                TextColorFactory.create(textcolor);
+                console.log("textocolorguardado");
+            }, 3000);
             $scope.cart.clearItems();
             console.log('hasta qui');
             //hasta qui
@@ -417,6 +457,26 @@ app.factory('ProductosDisenadosPorCompraFactory', function ($resource) {
 //Producto
 app.factory('ProductoFactory', function ($resource) {
     return $resource('/StampUreStyle2.0/webresources/producto/:id', {}, {
+        show: {method: 'GET'},
+        update: {method: 'PUT', params: {id: '@proId'}},
+        delete: {method: 'DELETE', params: {id: '@id'}},
+        nextId: {method: 'GET', params: {id: 'nextId'}, isArray: false}
+    });
+});
+
+//Factory de TExto y Color
+app.factory('TextColorFactory', function ($resource) {
+    return $resource('/TextColor/textocolorresources/textocolor', {},
+            {
+                query: {method: 'GET', isArray: true},
+                create: {method: 'POST'}
+
+            });
+});
+
+//Producto
+app.factory('OfertaFactory', function ($resource) {
+    return $resource('/StampUreStyle2.0/webresources/oferta/descuento/:id', {}, {
         show: {method: 'GET'},
         update: {method: 'PUT', params: {id: '@proId'}},
         delete: {method: 'DELETE', params: {id: '@id'}},
